@@ -1,0 +1,5 @@
+#Mac OS X files
+.DS_Store
+
+#Vim trash
+*.swp

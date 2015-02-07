@@ -1,0 +1,20 @@
+{
+    "name": "samayo/bulletproof",
+    "description": "PHP Secure Image Uploader, Cropper, Watermark, and Image Reisizing tool",
+    "keywords": ["image", "upload","watermark", "crop", "resize"],
+    "homepage": "http://github.com/samayo/BulletProof",
+    "license": "public domain",
+    "authors": [
+        {
+            "name": "simon"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "autoload": {
+            "files": [
+                "src/bulletproof.php"
+            ]
+    }
+}
