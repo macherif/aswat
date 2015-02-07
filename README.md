@@ -21,7 +21,7 @@
 #!shell
 
 cd Sites
-git clone https://github.com/macherif/aswat.git
+git clone git@github.com:macherif/aswat.git
 
 ```
 
