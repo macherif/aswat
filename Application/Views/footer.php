@@ -30,5 +30,7 @@
         <script src="app/controllers.js"></script>
         <script src="app/filters.js"></script>
         <script src="app/directives.js"></script>
+        <script src="app/components/authentication/controllers.js"></script>
+        <script src="app/components/authentication/services.js"></script>
 </body>
 </html>
