@@ -9,7 +9,7 @@
  * @todo
  */
  namespace Application\Mappers;
-use Library\Mapper\Common as Custom_Mapper_Common;
+use Library\Mapper\Common as Custom_Mapper_Common; 
 class UserMapper extends Custom_Mapper_Common {
     // __construct function overload to define type of storage.
     public function __construct()
@@ -51,5 +51,13 @@ class UserMapper extends Custom_Mapper_Common {
             $user->$setters[$iterator]($row->$attribut);
         }
         return $user;
+    }
+    public function authenticate ($username, $password){
+        
+    $this->getDb()->where ("login", $username);
+    $this->getDb()->where ("password", md5($username));
+    $row = $this->getDb()->getOne ("users");
+    //die($this->getDb()->getLastQuery());
+    return $row ? $row : null;
     }
 }

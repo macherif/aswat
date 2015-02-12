@@ -8,11 +8,11 @@
  */
 namespace Library\Mapper;
 
-interface Custom_Mapper_CommonInterface {
+interface CommonInterface {
 
     public function getDbShema();
 
-    public function setDbTable($dbTable);
+    //public function setDbTable($dbTable);
 
     public function fetchAll();
 

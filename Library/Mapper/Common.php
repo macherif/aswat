@@ -11,7 +11,7 @@
  use Api\Database\MysqliDb as DB;
  use Library\Config\Configuration;
  
-abstract class Custom_Mapper_Common implements Custom_Mapper_CommonInterface {
+abstract class Common implements Custom_Mapper_CommonInterface {
 
     protected $_dbTable;
     public $config;
@@ -49,7 +49,7 @@ abstract class Custom_Mapper_Common implements Custom_Mapper_CommonInterface {
      * @access public
      * @return array of objects
      */
-   abstract public function fetchAll()
+    public function fetchAll()
     {
         $resultSet = $this->getDbTable()->fetchAll();
         $entries = array();

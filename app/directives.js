@@ -14,7 +14,7 @@ angular.module('Aswat.directives', []).
       elm.text(version);
     };
   }]).
-  directive('bsActiveLink', ['$location', function($location) {
+  directive('bsActiveLink', ['$location', 'USER_ACCESS', 'USER_ROLES', '$rootScope', function($location,USER_ACCESS,USER_ROLES,$rootScope) {
   return {
     restrict: 'A', //use as attribute 
     replace: false,
@@ -31,7 +31,50 @@ angular.module('Aswat.directives', []).
                 } else {
                     a.parent().removeClass('active');   
                 };
-            });     
+            }); 
+            //Hide links by role
+            if(!$rootScope.globals.currentUser){
+      		$rootScope.globals.currentUser = {role : USER_ROLES.guest};
+      		}
+            USER_ACCESS.current = $rootScope.globals.currentUser.role;
+            	//PERMISSIONS
+            	switch(USER_ACCESS.current){
+            		case 'guest':
+	            		angular.forEach(elem.find('a'), function (a) {
+			                a = angular.element(a);
+			                //console.log(a.attr('href'));
+			                if (-1 == USER_ACCESS.guest.indexOf(a.attr('href').replace(/#/g, ''))) {
+			                    a.parent().addClass('hidden');
+			                    //alert('guest');
+			                } else {
+			                    a.parent().removeClass('hidden');   
+			                };
+            			}); 
+            		break;
+            		case 'customer':
+	            		angular.forEach(elem.find('a'), function (a) {
+			                a = angular.element(a);
+			                if (-1 == USER_ACCESS.customer.indexOf(a.attr('href').replace(/#/g, ''))) {
+			                    a.parent().addClass('hidden');
+			                } else {
+			                    a.parent().removeClass('hidden');   
+			                };
+            			}); 
+            		break;
+            		case 'admin':
+	            		angular.forEach(elem.find('a'), function (a) {
+			                a = angular.element(a);
+			                if (-1 == USER_ACCESS.admin.indexOf(a.attr('href').replace(/#/g, ''))) {
+			                    a.parent().addClass('hidden');
+			                } else {
+			                    a.parent().removeClass('hidden');   
+			                };
+            			}); 
+            		break;
+            	}
+            
+            
+                
         });    
      }
   };

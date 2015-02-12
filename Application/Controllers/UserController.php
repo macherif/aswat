@@ -10,9 +10,21 @@
  */
 
  namespace Application\Controllers;
+ use Application\Mappers\UserMapper as UserMapper;
  class UserController {
      public function __construct ()
      {
+         
+     }
+     
+     public function authentication ($params){
+         $mapper = new UserMapper();
+         
+         $response =  $mapper->authenticate ($params['username'], $params['password']);
+         
+         return is_null($response) ? array('error'=> true, 'msg' => 'Login Failed') : array(
+                                                                                            'succes'=>true,
+                                                                                            'data'=>$response);
          
      }
  } 

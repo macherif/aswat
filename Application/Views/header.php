@@ -72,6 +72,9 @@
                         <li role="presentation">
                             <a href="#/credential">Sign In / Log In</a>
                         </li>
+                        <li role="presentation">
+                            <a href="#/logout">Log Out</a>
+                        </li>
                         
                   </ul>
                 </nav>
