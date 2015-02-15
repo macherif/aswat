@@ -10,6 +10,8 @@
  */
  namespace Application\Mappers;
 use Library\Mapper\Common as Custom_Mapper_Common;
+use Application\Models\Image;
+use Api\ImageUploader\BulletProof as Uploader;
 class ImageMapper extends Custom_Mapper_Common {
     // __construct function overload to define type of storage.
     public function __construct()
@@ -42,12 +44,29 @@ class ImageMapper extends Custom_Mapper_Common {
      */
     public function _hydrate($row)
     {
-        $image = new Application\Models\Image();
+        $image = new Image();
         $attributes = array_keys($this->getDbShema());
         $setters = $this->generateModelSetters();
         foreach ($attributes as $iterator => $attribut) {
             $image->$setters[$iterator]($row->$attribut);
         }
+        return $image;
+    }
+    
+    public function upload($file, $name)
+    {
+        try{
+            $uploader = new Uploader();
+            $uploader->fileTypes(array("gif", "jpg", "jpeg", "png"));
+            $uploader-> uploadDir('assets/upload');
+            $uploader ->limitSize(array("min"=>1, "max"=>42000000));
+            $fileDir = $uploader->upload($file,$name);
+         /* Always use the try/catch block to handle errors */
+         }catch(\ImageUploader\ImageUploaderException $e){
+             echo $e->getMessage();
+         }
+         $image = new Image();
+         $image->setImageName($fileDir);
         return $image;
     }
 }

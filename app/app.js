@@ -6,6 +6,7 @@ angular.module('Aswat', [
   'Authentication',
   'ngRoute',
   'ngCookies',
+  'angularFileUpload',
   'Aswat.filters',
   'Aswat.services',
   'Aswat.directives',
@@ -19,6 +20,7 @@ config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/images', {templateUrl: 'app/shared/partials/images.html', controller: 'Images'});
   $routeProvider.when('/users', {templateUrl: 'app/shared/partials/users.html', controller: 'Users'});
   $routeProvider.when('/credential', {templateUrl: 'app/shared/partials/credential.html', controller: 'Credential'});
+  $routeProvider.when('/signup', {templateUrl: 'app/shared/partials/signup.html', controller: 'SignUp'});
   $routeProvider.when('/order', {templateUrl: 'app/shared/partials/order.html', controller: 'Order'});
   $routeProvider.otherwise({redirectTo: '/home'});
 }]).
@@ -33,7 +35,7 @@ constant('USER_ACCESS', {
   all: '*',
   admin: ['/dashboard','/logout','/home','/products','/order', '/images'],
   customer: ['/logout','/home','/products','/order', '/profile', '/purchase'],
-  guest: ['/home','/products','/login','/signin','/order', '/credential']
+  guest: ['/home','/products','/login','/signup','/order', '/credential']
 }).
 run(['$rootScope', '$location', '$cookieStore', '$http','USER_ROLES','USER_ACCESS',
     function ($rootScope, $location, $cookieStore, $http, USER_ROLES, USER_ACCESS) {

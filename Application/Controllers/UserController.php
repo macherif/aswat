@@ -22,9 +22,17 @@
          
          $response =  $mapper->authenticate ($params['username'], $params['password']);
          
-         return is_null($response) ? array('error'=> true, 'msg' => 'Login Failed') : array(
+         return is_null($response) ? array('error'=> true, 'msg' => 'Login Failed: Incorrect Username or Password') : array(
                                                                                             'succes'=>true,
                                                                                             'data'=>$response);
+         
+     }
+     public function register ($params){
+         $mapper = new UserMapper();
+         
+         $response =  $mapper->register ($params);
+         
+         return json_encode($response);
          
      }
  } 

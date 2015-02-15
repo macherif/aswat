@@ -1,37 +1,68 @@
 <style>
 	.form-signin {
-max-width: 330px;
-padding: 15px;
-margin: 0 auto;
-}
-.form-signin .form-signin-heading,
-.form-signin .checkbox {
-margin-bottom: 10px;
-}
-.form-signin .checkbox {
-font-weight: normal;
-}
-.form-signin .form-control {
-position: relative;
-height: auto;
--webkit-box-sizing: border-box;
--moz-box-sizing: border-box;
-box-sizing: border-box;
-padding: 10px;
-font-size: 16px;
-}
-.form-signin .form-control:focus {
-z-index: 2;
-}
+		max-width: 330px;
+		padding: 15px;
+		margin: 0 auto;
+	}
+	.form-signin .form-signin-heading, .form-signin .checkbox {
+		margin-bottom: 10px;
+	}
+	.form-signin .checkbox {
+		font-weight: normal;
+	}
+	.form-signin .form-control {
+		position: relative;
+		height: auto;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+		padding: 10px;
+		font-size: 16px;
+		margin-bottom: 10px;
+	}
+	.form-signin .form-control:focus {
+		z-index: 2;
+	}
 </style>
 
-<form  class="form-signin" ng-controller="SignUp">
+<form  class="form-signin" name="formSignUp" ng-controller="SignUp" ng-submit="uploadFile()"  enctype="multipart/form-data">
 	<h2 class="form-signin-heading">Sign up</h2>
-<input name="pseudo" placeholder="Your User Login"><br>
-<input name="login" ua-is-email placeholder="Email"><br>
-<input name="password" placeholder="Password" type="password"><br>
-<p><button class="btn btn-lg btn-primary btn-block" type="submit">Create account</button></p>
-<p ng-show="loading"><img src="https://app.userapp.io/img/ajax-loader-transparent.gif"></p>
-<div class="alert alert-danger" role="alert" ng-show="error">{{ error.message }}</div>
-<p class=""><a href="#/login">Log in</a></p>
+	<div class="alert alert-danger" role="alert" ng-show="error">
+		{{ error.message }}
+	</div>
+	<label class="">Your Picture</label>
+	<input type="file" ng-file-select="onFileSelect($files)" name="file" class="form-control" ng-model="file" required />
+	<span style="color:red" ng-show="myForm.file.$dirty && myForm.file.$invalid">
+  <span ng-show="formSignUp.file.$error.required">Picture is required.</span>
+  </span>
+  <div class="progress" style="margin-top: 20px;">
+                    <div class="progress-bar" progress-bar="uploadProgress" role="progressbar">
+                      <span ng-bind="uploadProgress"></span>
+                      <span>%</span>
+                    </div>
+   </div>
+	<input name="pseudo" class="form-control" ng-model="pseudo" required placeholder="Your User Login">
+	<span style="color:red" ng-show="myForm.pseudo.$dirty && myForm.pseudo.$invalid">
+  <span ng-show="formSignUp.pseudo.$error.required">Pseudo is required.</span>
+  </span>
+	<label for="email" class="">Your Email </label>
+	<input name="email" type="email" ng-model="email" class="form-control" ua-is-email placeholder="Your Email">
+	<span style="color:red" ng-show="myForm.email.$dirty && myForm.email.$invalid">
+  <span ng-show="formSignUp.email.$error.required">Email is required.</span>
+  </span>
+	<input name="password" ng-model="password" class="form-control" placeholder="Password" type="password">
+	<span style="color:red" ng-show="myForm.password.$dirty && myForm.password.$invalid">
+  <span ng-show="formSignUp.password.$error.required">Password is required.</span>
+  </span>
+	
+	<p>
+		<button class="btn btn-lg btn-primary btn-block" type="submit" ng-disabled="formSignUp.file.$dirty && formSignUp.file.$invalid || formSignUp.username.$dirty && myForm.username.$invalid ||
+  myForm.email.$dirty && myForm.email.$invalid || myForm.password.$dirty && myForm.password.$invalid">
+			Create account
+		</button>
+	</p>
+	
+	<p class="">
+		Already registred ? <a href="#/login">Log in</a>
+	</p>
 </form>

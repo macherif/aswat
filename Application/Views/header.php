@@ -48,31 +48,34 @@
         <div class="header">
                 <nav>
                   <ul class="nav nav-pills pull-right" bs-active-link>
-                        <li   role="presentation">
+                        <li   class="hidden" role="presentation">
                             <a href="#/home">Home</a>
                         </li>
-                        <li role="presentation">
+                        <li class="hidden" role="presentation">
                             <a href="#/products">Products</a>
                         </li>
-                        <li role="presentation">
+                        <li class="hidden" role="presentation">
                             <a href="#/categories">Categories</a>
                         </li>
-                        <li role="presentation">
+                        <li class="hidden" role="presentation">
                             <a href="#/users">Users</a>
                         </li>
-                        <li  role="presentation">
+                        <li  class="hidden" role="presentation">
                             <a href="#/roles">Roles</a>
                         </li>
-                        <li  role="presentation">
+                        <li  class="hidden" role="presentation">
                             <a href="#/images">Images</a>
                         </li>
-                        <li  role="presentation">
+                        <li  class="hidden" role="presentation">
                             <a href="#/order">Shopping Cart</a>
                         </li>
-                        <li role="presentation">
-                            <a href="#/credential">Sign In / Log In</a>
+                        <li class="hidden" role="presentation">
+                            <a href="#/credential">Log In</a>
                         </li>
-                        <li role="presentation">
+                        <li class="hidden" role="presentation">
+                            <a href="#/signup">Sign In</a>
+                        </li>
+                        <li class="hidden" role="presentation">
                             <a href="#/logout">Log Out</a>
                         </li>
                         

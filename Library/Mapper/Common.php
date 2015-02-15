@@ -144,12 +144,12 @@ abstract class Common implements Custom_Mapper_CommonInterface {
         }
         if (null === $buisnessObject->getId()) {
             unset($data['id']);
-            $lastInsertedId = $this->getDbTable()->insert($this->getDbTable, $data);
+            $lastInsertedId = $this->getDb()->insert($this->getDbTable(), $data);
             $buisnessObject->setId($lastInsertedId);
             return $buisnessObject;
         } else {
-            $this->getDb()->where ('id', $id);
-            $this->getDb()->update($this->getDbTable, $data);
+            $this->getDb()->where ('id', $buisnessObject->getId());
+            $this->getDb()->update($this->getDbTable(), $data);
         }
     }
     

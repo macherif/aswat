@@ -22,7 +22,8 @@
         <script type="text/javascript" src="assets/vendor/angular/angular-touch.min.js"></script>
         <script type="text/javascript" src="assets/vendor/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
         <script type="text/javascript" src="assets/vendor/angular-ui-router/release/angular-ui-router.js"></script>
-        <script type="text/javascript" src="assets/vendor/angular-file-upload/angular-file-upload.min.js"></script>
+        <script type="text/javascript" src="assets/vendor/ng-file-upload/angular-file-upload-shim.min.js"></script>
+        <script type="text/javascript" src="assets/vendor/ng-file-upload/angular-file-upload.min.js"></script>
         <script type="text/javascript" src="assets/vendor/angular-local-storage/angular-local-storage.min.js"></script>
         <script type="text/javascript" src="assets/vendor/angular-ui-grid/ui-grid.min.js"></script>
         <script src="app/app.js"></script>
