@@ -47,6 +47,9 @@ class UserMapper extends Custom_Mapper_Common {
     public function _hydrate($row)
     {
         $user = new User();
+        if(is_array($row)){
+            $row = (object) $row;
+        }
         $attributes = array_keys($this->getDbShema());
         $setters = $this->generateModelSetters();
         foreach ($attributes as $iterator => $attribut) {
@@ -59,6 +62,15 @@ class UserMapper extends Custom_Mapper_Common {
     $this->getDb()->where ("login = '" . $username . "' OR email = '". $username . "'");
     $this->getDb()->where ("password", md5($username));
     $row = $this->getDb()->getOne ("users");
+    if(count($row)){
+        $imageMapper = new ImageMapper(); 
+        $image = $imageMapper->find($row['image_id']);
+        $row['image'] = $image->getImageName();
+        $row['image_alt'] = $image->getAlt();
+        $row['image_title'] = $image->getTitle();
+    }
+    
+    unset($row['password']);
     //var_dump($_FILES);
     //die($this->getDb()->getLastQuery());
     //
@@ -96,8 +108,10 @@ class UserMapper extends Custom_Mapper_Common {
        $this->save($userObj);
        return array('success'=>true,
          'data'=>array(
-            'username'=> $userObj->getLogin(),
-            'image' => $userObj->getImageId(),
+            'username' => $userObj->getLogin(),
+            'image' => $imageObj->getImageName(),
+            'image_alt' => $imageObj->getAlt(),
+            'image_title' => $imageObj->getTitle(),
             'role' => $userObj->getRoleId() == 2 ? 'customer' : 'admin',
          )
          );

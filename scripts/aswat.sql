@@ -1,6 +1,14 @@
 
 USE aswat;
 
+-- phpMyAdmin SQL Dump
+-- version 3.4.10.1deb1
+-- http://www.phpmyadmin.net
+--
+-- Client: localhost
+-- Généré le : Dim 15 Février 2015 à 02:01
+-- Version du serveur: 5.5.40
+-- Version de PHP: 5.3.10-1ubuntu3.15
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -41,7 +49,14 @@ CREATE TABLE IF NOT EXISTS `images` (
   `title` varchar(250) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `image_name` (`image_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Contenu de la table `images`
+--
+
+INSERT INTO `images` (`id`, `image_name`, `width`, `height`, `alt`, `title`) VALUES
+(1, 'assets/upload/1423961705.jpeg', 0, 0, 'Picture of customer', 'Picture of customer');
 
 -- --------------------------------------------------------
 
@@ -58,6 +73,12 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `amount` float NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--
+-- RELATIONS POUR LA TABLE `orders`:
+--   `user_id`
+--       `users` -> `id`
+--
 
 -- --------------------------------------------------------
 
@@ -77,6 +98,14 @@ CREATE TABLE IF NOT EXISTS `products` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+--
+-- RELATIONS POUR LA TABLE `products`:
+--   `category_id`
+--       `categories` -> `id`
+--   `image_id`
+--       `images` -> `id`
+--
+
 -- --------------------------------------------------------
 
 --
@@ -89,7 +118,16 @@ CREATE TABLE IF NOT EXISTS `roles` (
   `role` varchar(100) NOT NULL,
   `enabled` smallint(6) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+
+--
+-- Contenu de la table `roles`
+--
+
+INSERT INTO `roles` (`id`, `role`, `enabled`) VALUES
+(1, 'guest', 1),
+(2, 'customer', 1),
+(3, 'admin', 1);
 
 -- --------------------------------------------------------
 
@@ -109,4 +147,19 @@ CREATE TABLE IF NOT EXISTS `users` (
   `role_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `login` (`login`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- RELATIONS POUR LA TABLE `users`:
+--   `image_id`
+--       `images` -> `id`
+--   `role_id`
+--       `roles` -> `id`
+--
+
+--
+-- Contenu de la table `users`
+--
+
+INSERT INTO `users` (`id`, `login`, `password`, `email`, `created`, `enabled`, `image_id`, `role_id`) VALUES
+(1, 'customer', '91ec1f9324753048c0096d036a694f86', 'customer@aswat-telecom.com', '0000-00-00 00:00:00', 1, 1, 2);

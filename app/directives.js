@@ -14,7 +14,7 @@ angular.module('Aswat.directives', []).
       elm.text(version);
     };
   }]).
-  directive('bsActiveLink', ['$location', 'USER_ACCESS', 'USER_ROLES', '$rootScope', function($location,USER_ACCESS,USER_ROLES,$rootScope) {
+  directive('bsActiveLink', ['$location', 'USER_ACCESS', 'USER_ROLES', '$rootScope', '$cookieStore', function($location,USER_ACCESS,USER_ROLES,$rootScope,$cookieStore) {
   return {
     restrict: 'A', //use as attribute 
     replace: false,
@@ -36,7 +36,8 @@ angular.module('Aswat.directives', []).
             if(!$rootScope.globals.currentUser){
       		$rootScope.globals.currentUser = {role : USER_ROLES.guest};
       		}
-            USER_ACCESS.current = $rootScope.globals.currentUser.role;
+            USER_ACCESS.current = $cookieStore.get('role') || $rootScope.globals.currentUser.role;
+            //alert($cookieStore.get('role'));
             	//PERMISSIONS
             	switch(USER_ACCESS.current){
             		case 'guest':

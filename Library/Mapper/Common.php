@@ -67,12 +67,12 @@ abstract class Common implements Custom_Mapper_CommonInterface {
      */
     public function find($id)
     {
-        $result = $this->getDbTable()->find($id);
-        if (0 == count($result)) {
+        $this->getDb()->where ("id", $id);
+        $row = $this->getDb()->getOne ($this->getDbTable());
+        if (0 == count($row)) {
             //die("User does not exist");
             return false;
         }
-        $row = $result->current();
         return $this->_hydrate($row);
     }
 

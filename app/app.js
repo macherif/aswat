@@ -22,6 +22,7 @@ config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/credential', {templateUrl: 'app/shared/partials/credential.html', controller: 'Credential'});
   $routeProvider.when('/signup', {templateUrl: 'app/shared/partials/signup.html', controller: 'SignUp'});
   $routeProvider.when('/order', {templateUrl: 'app/shared/partials/order.html', controller: 'Order'});
+  $routeProvider.when('/logout', {templateUrl: 'app/shared/partials/order.html', controller: 'LogOut'});
   $routeProvider.otherwise({redirectTo: '/home'});
 }]).
 constant('USER_ROLES', {
@@ -40,22 +41,33 @@ constant('USER_ACCESS', {
 run(['$rootScope', '$location', '$cookieStore', '$http','USER_ROLES','USER_ACCESS',
     function ($rootScope, $location, $cookieStore, $http, USER_ROLES, USER_ACCESS) {
     	//console.debug($location);
+    	if(!$rootScope.globals){$rootScope.globals = $cookieStore.get('globals') || {}; $rootScope.globals.currentUser = {};}
         // keep user logged in after page refresh
-        $rootScope.globals = $cookieStore.get('globals') || {};
-        if ($rootScope.globals.currentUser) {
-            $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata; // jshint ignore:line
-        }else{
-        	$rootScope.globals.currentUser = {role : USER_ROLES.guest};
+        
+        if ($cookieStore.get('username')) {
+        	USER_ROLES.current = $cookieStore.get('role') || 'guest';
+        	$rootScope.globals.currentUser.role = $cookieStore.get('role') || 'guest';
         }
       $rootScope.$on('$locationChangeStart', function (event, next, current) {
-      	if(!$rootScope.globals.currentUser){
+      	if(!$cookieStore.get('username')){
       		$rootScope.globals.currentUser = {role : USER_ROLES.guest};
+      	}
+      	if($cookieStore.get('username') && !$rootScope.globals.currentUser.username){
+      		$rootScope.globals.currentUser = {
+      			'role' : $cookieStore.get('role'),
+      			'username' : $cookieStore.get('username'),
+      			'image' : $cookieStore.get('image'),
+      			'image_alt' : $cookieStore.get('image_alt'),
+      			'image_title' : $cookieStore.get('image_title')
+      		};
       	}
             // redirect to login page if not logged in
             if ($location.path() && ($location.path() !== '/login') &&  ($location.path() !== '/signin')) {
-            	USER_ACCESS.current = $rootScope.globals.currentUser.role;
+            	if(!$rootScope.globals.currentUser.role){
+            		$rootScope.globals.currentUser.role = $cookieStore.get('role') || 'guest';
+            	}
             	//PERMISSIONS
-            	switch(USER_ACCESS.current){
+            	switch($rootScope.globals.currentUser.role){
             		case 'guest':
             		//console.log(USER_ACCESS.guest.indexOf($location.path()));
 	            		if(-1 == USER_ACCESS.guest.indexOf($location.path())){

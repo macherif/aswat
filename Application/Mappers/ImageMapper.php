@@ -45,6 +45,9 @@ class ImageMapper extends Custom_Mapper_Common {
     public function _hydrate($row)
     {
         $image = new Image();
+        if(is_array($row)){
+            $row = (object) $row;
+        }
         $attributes = array_keys($this->getDbShema());
         $setters = $this->generateModelSetters();
         foreach ($attributes as $iterator => $attribut) {
