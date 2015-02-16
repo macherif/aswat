@@ -78,7 +78,7 @@ class UserMapper extends Custom_Mapper_Common {
     }
     public function register ($params){
         $row = (array) json_decode($params['data']);
-        $row['created'] = time();
+        $row['created'] = date("Y-m-d H:i:s");
         $row['enabled'] = '1';
         $row['image_id'] = '0';
         $row['role_id'] = '2';  

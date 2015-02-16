@@ -15,10 +15,11 @@ angular.module('Aswat', [
 config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/home', {templateUrl: 'app/shared/partials/home.html', controller: 'Home'});
   $routeProvider.when('/products', {templateUrl: 'app/shared/partials/products.html', controller: 'Products'});
-  $routeProvider.when('/categories', {templateUrl: 'app/shared/partials/categories.html', controller: 'Categories'});
-  $routeProvider.when('/roles', {templateUrl: 'app/shared/partials/roles.html', controller: 'Roles'});
-  $routeProvider.when('/images', {templateUrl: 'app/shared/partials/images.html', controller: 'Images'});
-  $routeProvider.when('/users', {templateUrl: 'app/shared/partials/users.html', controller: 'Users'});
+  $routeProvider.when('/dashboard/products', {templateUrl: 'app/shared/partials/products-admin.html', controller: 'AdminProducts'});
+  $routeProvider.when('/dashboard/categories', {templateUrl: 'app/shared/partials/categories.html', controller: 'AdminCategories'});
+  $routeProvider.when('/dashboard/roles', {templateUrl: 'app/shared/partials/roles.html', controller: 'AdminRoles'});
+  $routeProvider.when('/images', {templateUrl: 'app/shared/partials/images.html', controller: 'AdminImages'});
+  $routeProvider.when('/dashboard/users', {templateUrl: 'app/shared/partials/users.html', controller: 'AdminUsers'});
   $routeProvider.when('/credential', {templateUrl: 'app/shared/partials/credential.html', controller: 'Credential'});
   $routeProvider.when('/signup', {templateUrl: 'app/shared/partials/signup.html', controller: 'SignUp'});
   $routeProvider.when('/order', {templateUrl: 'app/shared/partials/order.html', controller: 'Order'});
@@ -34,7 +35,7 @@ constant('USER_ROLES', {
 }).
 constant('USER_ACCESS', {
   all: '*',
-  admin: ['/dashboard','/logout','/home','/products','/order', '/images'],
+  admin: ['/dashboard','/logout','/home','/dashboard/images', '/dashboard/products', '/dashboard/categories', , '/dashboard/users'],
   customer: ['/logout','/home','/products','/order', '/profile', '/purchase'],
   guest: ['/home','/products','/login','/signup','/order', '/credential']
 }).

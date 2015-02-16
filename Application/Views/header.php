@@ -42,11 +42,10 @@
 			}
 			 .user-info {
 			    max-width : 28%;
-			    max-height : 200px;
+			    max-height : 40px;
+			    font-size: 10px;
 			    /*background-color: white;*/
-			    font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
-			    border-radius: 10px;
-			    border: #245580 inset;
+			    /*font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;*/
 			}
 
 		</style>
@@ -63,16 +62,13 @@
 							<a href="#/products">Products</a>
 						</li>
 						<li class="hidden" role="presentation">
-							<a href="#/categories">Categories</a>
+                            <a href="#/dashboard/products">Products</a>
+                        </li>
+						<li class="hidden" role="presentation">
+							<a href="#/dashboard/categories">Categories</a>
 						</li>
 						<li class="hidden" role="presentation">
-							<a href="#/users">Users</a>
-						</li>
-						<li  class="hidden" role="presentation">
-							<a href="#/roles">Roles</a>
-						</li>
-						<li  class="hidden" role="presentation">
-							<a href="#/images">Images</a>
+							<a href="#/dashboard/users">Users</a>
 						</li>
 						<li  class="hidden" role="presentation">
 							<a href="#/order">Shopping Cart</a>
@@ -89,44 +85,42 @@
 
 					</ul>
 				</nav>
-				<h3 class="text-muted" app-name></h3>
-			</div>
-			<!-- BEGIN USER INFO !-->
-			<header class="user-info" ng-show="isAuthorized()" ng-controller="Home">
-			    <div class="paragraphs">
-                  <div class="row">
-                    <div class="span4">
-                      <div class="clearfix content-heading">
-                         <div ng-if="isAuthorized">
-                    <div class="col-lg-4">
-                        <img class="thumbnail" width = "48px" height="50px" ng-src="{{ currentUser.image }}" ng-title="{{ currentUser.image_title }}" ng-alt="{{ currentUser.image_alt }}"/>
-                    </div>
-                    <div> Welcome, <b> {{ currentUser.username }} </b></div>
-                    <div ng-switch on="currentUser.role">
-                        <div ng-switch-when="admin">
+				
+				<!-- BEGIN USER INFO !-->
+            <span class="user-info"  ng-controller="Home">
+                <span class="text-muted" ><b app-name> </b></span>
+                <span ng-show="isAuthorized()" class="paragraphs">
+                  <span class="row">
+                    <span class="span4">
+                      <span class="clearfix content-heading">
+                         <span ng-if="isAuthorized">
+                    
+                        <img class="" style="display: inline;" width = "48px" height="50px" ng-src="{{ currentUser.image }}" ng-title="{{ currentUser.image_title }}" ng-alt="{{ currentUser.image_alt }}"/>
+                    
+                    <span> Welcome, <b> {{ currentUser.username }} </b></span>
+                    <span ng-switch on="currentUser.role">
+                        <span ng-switch-when="admin">
                             You're admin.
-                        </div>
-                        <div ng-switch-when="customer">
+                        </span>
+                        <span ng-switch-when="customer">
                             You're connected as a good customer.
-                        </div>
-                        <div ng-switch-when="admin">
-                        You're admin.
-                        </div>
-                        <div ng-switch-default>
+                        </span>
+                        <span ng-switch-default>
                             You're not yet connected. You have a limited access.
-                        </div>
-                    </div>
-                </div>
+                        </span>
+                    </span>
+                </span>
                           
-                      </div>
+                      </span>
                       
-                   </div>
-                  </div>
-                </div>
+                   </span>
+                  </span>
+                </span>
                 
-			</header>
-			
-			<!-- END USER INFO !-->
+            </span>
+            
+            <!-- END USER INFO !-->
+			</div>
 
 			<div ng-view></div>
 		</div>

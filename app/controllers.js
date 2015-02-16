@@ -45,16 +45,19 @@ angular.module('Aswat.controllers', [
   .controller('Products', [function() {
 
   }])
-  .controller('Categories', [function() {
+  .controller('AdminProducts', [function() {
 
   }])
-  .controller('Roles', [function() {
+  .controller('AdminCategories', [function() {
 
   }])
-  .controller('Images', [function() {
+  .controller('AdminRoles', [function() {
 
   }])
-  .controller('Users', [function() {
+  .controller('AdminImages', [function() {
+
+  }])
+  .controller('AdminUsers', [function() {
 
   }])
   .controller('Credential', ['$scope', '$http', '$location', '$cookieStore', 'USER_ROLES', function($scope, $http, $location, $cookieStore,USER_ROLES) {
