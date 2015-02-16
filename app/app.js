@@ -6,6 +6,7 @@ angular.module('Aswat', [
   'Authentication',
   'ngRoute',
   'ngCookies',
+  'ngResource',
   'angularFileUpload',
   'Aswat.filters',
   'Aswat.services',

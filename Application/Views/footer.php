@@ -16,7 +16,7 @@
         <script type="text/javascript" src="assets/vendor/angular/angular-animate.min.js"></script>
         <script type="text/javascript" src="assets/vendor/angular/angular-cookies.min.js"></script>
         <script type="text/javascript" src="assets/vendor/angular/angular-loader.min.js"></script>
-        <script type="text/javascript" src="assets/vendor/angular/angular-resource.min.js"></script>
+        <script type="text/javascript" src="assets/vendor/angular-resource/angular-resource.min.js"></script>
         <script type="text/javascript" src="assets/vendor/angular/angular-route.min.js"></script>
         <script type="text/javascript" src="assets/vendor/angular/angular-sanitize.min.js"></script>
         <script type="text/javascript" src="assets/vendor/angular/angular-touch.min.js"></script>
