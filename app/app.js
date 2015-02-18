@@ -7,6 +7,7 @@ angular.module('Aswat', [
   'ngRoute',
   'ngCookies',
   'ngResource',
+  'ui.router',
   'angularFileUpload',
   'Aswat.filters',
   'Aswat.services',
@@ -20,11 +21,12 @@ config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/dashboard/categories', {templateUrl: 'app/shared/partials/categories.html', controller: 'AdminCategories'});
   $routeProvider.when('/dashboard/roles', {templateUrl: 'app/shared/partials/roles.html', controller: 'AdminRoles'});
   $routeProvider.when('/images', {templateUrl: 'app/shared/partials/images.html', controller: 'AdminImages'});
-  $routeProvider.when('/dashboard/users', {templateUrl: 'app/shared/partials/users.html', controller: 'AdminUsers'});
+  $routeProvider.when('/dashboard/users', {templateUrl: 'app/shared/partials/users.html', controller: 'AdminUsersListController'});
   $routeProvider.when('/credential', {templateUrl: 'app/shared/partials/credential.html', controller: 'Credential'});
   $routeProvider.when('/signup', {templateUrl: 'app/shared/partials/signup.html', controller: 'SignUp'});
   $routeProvider.when('/order', {templateUrl: 'app/shared/partials/order.html', controller: 'Order'});
   $routeProvider.when('/logout', {templateUrl: 'app/shared/partials/order.html', controller: 'LogOut'});
+  $routeProvider.when('/dashboard/users/:id/view', {templateUrl: 'app/shared/partials/user-view.html', controller: 'AdminUserViewController'});
   $routeProvider.otherwise({redirectTo: '/home'});
 }]).
 constant('USER_ROLES', {
@@ -82,12 +84,30 @@ run(['$rootScope', '$location', '$cookieStore', '$http','USER_ROLES','USER_ACCES
 	            		}
             		break;
             		case 'admin':
-	            		if(-1 == USER_ACCESS.admin.indexOf($location.path())){
+	            		/*if(-1 == USER_ACCESS.admin.indexOf($location.path())){
 	            			$location.path('/login');
-	            		}
+	            		}*/
             		break;
             	}
                
             }
        });
-    }]);
+    }]).config(['$stateProvider', function($stateProvider) {
+  $stateProvider.state('Users', { // state for showing all movies
+    url: '/dashboard/users',
+    templateUrl: 'app/shared/partials/users.html',
+    controller: 'AdminUsersListController'
+  }).state('viewUser', { //state for showing single movie
+    url: '/dashboard/users/:id/view',
+    templateUrl: 'app/shared/partials/user-view.html',
+    controller: 'AdminUserViewController'
+  }).state('newUser', { //state for adding a new movie
+    url: '/dashboard/users/new',
+    templateUrl: 'app/shared/partials/user-add.html',
+    controller: 'UserCreateController'
+  }).state('editUser', { //state for updating a movie
+    url: '/dashboard/users/:id/edit',
+    templateUrl: 'app/shared/partials/user-edit.html',
+    controller: 'UserEditController'
+  });
+}]);

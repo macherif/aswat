@@ -57,9 +57,39 @@ angular.module('Aswat.controllers', [
   .controller('AdminImages', [function() {
 
   }])
-  .controller('AdminUsers', [function() {
+  .controller('AdminUsersListController', ['$scope', 'User', function($scope, User) {
+  	$scope.users = User.get(); //fetch all Users.
+ //console.debug($scope.users);
+  $scope.deleteUser = function(user) { // Delete user
+    if (popupService.showPopup('Really delete this?')) {
+      user.$delete(function() {
+        $window.location.href = ''; //redirect to home
+      });
+    }
+  };
 
   }])
+  .controller('AdminUserViewController', ['$scope' , '$stateParams', 'User','$http', function($scope, $stateParams, User, $http) {
+  	$http.get('index.php?ajax=1&controller=User&action=fetch&id='+$stateParams.id ).success(function(data) {
+  		//console.debug(user);
+      $scope.users = data;
+    }); //Get 
+  	 
+	
+  }])
+  .controller('UserEditController', ['$scope' , '$state', '$stateParams', 'User', function($scope, $state, $stateParams, User) {
+	  $scope.updateUser = function() { //Update the edited movie. Issues a PUT to /api/movies/:id
+	    $scope.user.$update(function() {
+	      $state.go('Users'); // on success go back to users i.e. Users state.
+	    });
+	  };
+	 
+	  $scope.loadUser = function() { //Issues a GET request 
+	    $scope.user = User.get({ id: $stateParams.id });
+	  };
+	 
+	  $scope.loadUser(); // Load user which can be edited on UI
+ }])
   .controller('Credential', ['$scope', '$http', '$location', '$cookieStore', 'USER_ROLES', function($scope, $http, $location, $cookieStore,USER_ROLES) {
 	this.cancel = $scope.$dismiss;
 	$scope.getCredential = function () { 
@@ -146,3 +176,4 @@ angular.module('Aswat.controllers', [
 						$cookieStore.remove('image_title');
 						$location.path('/home');
   }]);
+  

@@ -28,6 +28,7 @@ class Bootstrap {
             $controller = 'Application\Controllers\\' . ucfirst($this -> params['controller'] . 'Controller');
             $this -> controller = new $controller();
             $action = $this -> params['action'];
+            header('Content-Type: application/json');
             echo json_encode($this -> controller -> $action($this -> params));
         } else {
             require_once 'Application/Views/header.php';

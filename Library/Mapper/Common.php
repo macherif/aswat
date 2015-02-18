@@ -51,12 +51,18 @@ abstract class Common implements Custom_Mapper_CommonInterface {
      */
     public function fetchAll()
     {
-        $resultSet = $this->getDbTable()->fetchAll();
+        $resultSet = $this->getDb()->get($this->getDbTable());
         $entries = array();
         foreach ($resultSet as $row) {
             $entries[] = $this->_hydrate($row);
         }
         return $entries;
+    }
+    
+    public function fetch()
+    {
+        $resultSet = $this->getDb()->get($this->getDbTable());
+        return $resultSet;
     }
 
 
@@ -74,6 +80,16 @@ abstract class Common implements Custom_Mapper_CommonInterface {
             return false;
         }
         return $this->_hydrate($row);
+    }
+    public function getOne($id)
+    {
+        $this->getDb()->where ("id", $id);
+        $row = $this->getDb()->getOne ($this->getDbTable());
+        if (0 == count($row)) {
+            //die("User does not exist");
+            return false;
+        }
+        return $row;
     }
 
     /**

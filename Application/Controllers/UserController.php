@@ -35,4 +35,16 @@
          return json_encode($response);
          
      }
+     public function fetch ($params){
+         $mapper = new UserMapper();
+         
+         if(!empty($params['id'])){
+             $response =  array($mapper->getOne($params['id']));
+         }else{
+             $response =  $mapper->fetch();
+         }
+         
+         return $response ;
+         
+     }
  } 

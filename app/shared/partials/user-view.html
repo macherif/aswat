@@ -1,0 +1,40 @@
+<div ng-repeat="user in users">
+	
+
+<table class="table movietable">
+  <tr>
+    <td><h3>Details for {{user.login}}</h3></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Username</td>
+    <td>{{user.login}}</td>
+  </tr>
+  <tr>
+    <td>Role</td>
+    <td><span ng-switch on="user.role_id">
+                        <span ng-switch-when="3">
+                             Adminestration Access
+                        </span>
+                        <span ng-switch-when="2">
+                            Customer Access
+                        </span>
+                        <span ng-switch-default>
+                            Guest
+                        </span>
+                    </span>
+    	</td></td>
+  </tr>
+  <tr>
+    <td>Email</td>
+    <td>{{user.email}}</td>
+  </tr>
+  <tr>
+    <td>Created</td>
+    <td>{{user.created}}</td>
+  </tr>
+</table>
+<div>
+  <a class="btn btn-primary" ui-sref="editUser({id:user.id})">Edit</a>
+</div>
+</div>
