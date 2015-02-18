@@ -6,7 +6,7 @@ USE aswat;
 -- http://www.phpmyadmin.net
 --
 -- Client: localhost
--- Généré le : Dim 15 Février 2015 à 02:01
+-- Généré le : Mer 18 Février 2015 à 01:53
 -- Version du serveur: 5.5.40
 -- Version de PHP: 5.3.10-1ubuntu3.15
 
@@ -49,14 +49,15 @@ CREATE TABLE IF NOT EXISTS `images` (
   `title` varchar(250) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `image_name` (`image_name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
 -- Contenu de la table `images`
 --
 
 INSERT INTO `images` (`id`, `image_name`, `width`, `height`, `alt`, `title`) VALUES
-(1, 'assets/upload/1423961705.jpeg', 0, 0, 'Picture of customer', 'Picture of customer');
+(1, 'assets/upload/1423961705.jpeg', 0, 0, 'Picture of customer', 'Picture of customer'),
+(2, 'assets/upload/1424124824.png', 0, 0, 'Picture of admin', 'Picture of admin');
 
 -- --------------------------------------------------------
 
@@ -73,12 +74,6 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `amount` float NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
---
--- RELATIONS POUR LA TABLE `orders`:
---   `user_id`
---       `users` -> `id`
---
 
 -- --------------------------------------------------------
 
@@ -97,14 +92,6 @@ CREATE TABLE IF NOT EXISTS `products` (
   `price` float NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
---
--- RELATIONS POUR LA TABLE `products`:
---   `category_id`
---       `categories` -> `id`
---   `image_id`
---       `images` -> `id`
---
 
 -- --------------------------------------------------------
 
@@ -147,19 +134,13 @@ CREATE TABLE IF NOT EXISTS `users` (
   `role_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `login` (`login`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
-
---
--- RELATIONS POUR LA TABLE `users`:
---   `image_id`
---       `images` -> `id`
---   `role_id`
---       `roles` -> `id`
---
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
 -- Contenu de la table `users`
 --
 
 INSERT INTO `users` (`id`, `login`, `password`, `email`, `created`, `enabled`, `image_id`, `role_id`) VALUES
-(1, 'customer', '91ec1f9324753048c0096d036a694f86', 'customer@aswat-telecom.com', '0000-00-00 00:00:00', 1, 1, 2);
+(1, 'customer', '91ec1f9324753048c0096d036a694f86', 'customer@aswat-telecom.com', '0000-00-00 00:00:00', 1, 1, 2),
+(2, 'admin', '21232f297a57a5a743894a0e4a801fc3', 'admin@aswat-telecom.com', '2015-02-16 02:07:07', 1, 2, 3);
+
