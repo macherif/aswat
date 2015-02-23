@@ -9,21 +9,20 @@ angular.module('Aswat.services', []).
   value('version', '0.1').
   value('name', 'ASWAT ASSESSMENT').
   factory('User', function($resource) {
-  return $resource('index.php?ajax=1&controller=User&action=fetch&id=:id', { id: '@_id' }, {
+  return $resource('index.php?ajax=1&controller=User&action=fetch&id=:id', { id: '@id' }, {
     update: {
       method: 'PUT'
     },
     get: {
     	method: 'JSON',
     	 isArray: true,
-    	  interceptor: {
+    	 interceptor: {
       response: function(response) {
         // expose response
         return response;
       }
-      },
-    query: {isArray:false}
-  }
+    }
+ 	 }, query: { method: "GET", isArray: false }
   }
   );
 });

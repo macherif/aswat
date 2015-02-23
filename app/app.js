@@ -27,6 +27,7 @@ config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/order', {templateUrl: 'app/shared/partials/order.html', controller: 'Order'});
   $routeProvider.when('/logout', {templateUrl: 'app/shared/partials/order.html', controller: 'LogOut'});
   $routeProvider.when('/dashboard/users/:id/view', {templateUrl: 'app/shared/partials/user-view.html', controller: 'AdminUserViewController'});
+  $routeProvider.when('/dashboard/users/:id/edit', {templateUrl: 'app/shared/partials/user-edit.html', controller: 'AdminUserEditController'});
   $routeProvider.otherwise({redirectTo: '/home'});
 }]).
 constant('USER_ROLES', {
@@ -93,21 +94,21 @@ run(['$rootScope', '$location', '$cookieStore', '$http','USER_ROLES','USER_ACCES
             }
        });
     }]).config(['$stateProvider', function($stateProvider) {
-  $stateProvider.state('Users', { // state for showing all movies
+  $stateProvider.state('Users', { // state for showing all Users
     url: '/dashboard/users',
     templateUrl: 'app/shared/partials/users.html',
     controller: 'AdminUsersListController'
-  }).state('viewUser', { //state for showing single movie
+  }).state('viewUser', { //state for showing single User
     url: '/dashboard/users/:id/view',
     templateUrl: 'app/shared/partials/user-view.html',
     controller: 'AdminUserViewController'
-  }).state('newUser', { //state for adding a new movie
+  }).state('newUser', { //state for adding a new User
     url: '/dashboard/users/new',
     templateUrl: 'app/shared/partials/user-add.html',
     controller: 'UserCreateController'
-  }).state('editUser', { //state for updating a movie
+  }).state('editUser', { //state for updating a User
     url: '/dashboard/users/:id/edit',
     templateUrl: 'app/shared/partials/user-edit.html',
-    controller: 'UserEditController'
+    controller: 'AdminUserEditController'
   });
 }]);

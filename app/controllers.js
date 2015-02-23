@@ -77,15 +77,30 @@ angular.module('Aswat.controllers', [
   	 
 	
   }])
-  .controller('UserEditController', ['$scope' , '$state', '$stateParams', 'User', function($scope, $state, $stateParams, User) {
-	  $scope.updateUser = function() { //Update the edited movie. Issues a PUT to /api/movies/:id
+  .controller('AdminUserEditController', ['$scope' , '$state', '$stateParams', 'User', '$http', function($scope, $state, $stateParams, User, $http) {
+	  /*$scope.user = {};
+	  $scope.updateUser = function() { //Update the edited user. Issues a PUT 
 	    $scope.user.$update(function() {
 	      $state.go('Users'); // on success go back to users i.e. Users state.
 	    });
-	  };
+	  };*/
+	$scope.updateUser = function (){
+		var responsePromise = $http.post(
+			'index.php?ajax=1&controller=user&action=update' ,
+			 {'id' : $stateParams.id,
+			 	'login' : $scope.user.login,
+			 'email' : $scope.user.email,
+			 		'role_id' : $scope.user.role_id}
+			  );
+			   $state.go('Users');
+		
+	}; 
 	 
 	  $scope.loadUser = function() { //Issues a GET request 
-	    $scope.user = User.get({ id: $stateParams.id });
+		$http.get('index.php?ajax=1&controller=User&action=fetch&id='+$stateParams.id ).success(function(data) {
+  		//console.debug(user);
+	      $scope.users = data;
+	    }); //Get
 	  };
 	 
 	  $scope.loadUser(); // Load user which can be edited on UI
