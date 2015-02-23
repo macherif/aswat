@@ -6,6 +6,10 @@
  A PHP/AngularJs Application for test purpose
  The	purpose of this application is to be an evaluation or an assessment by	**ASWAT-TELECOM** .
 
+#App Credentials#
+	* Customer Role : customer / customer
+	* Admin Role : admin / admin
+
 ### What is this repository for? ###
  
  * To	ensure the smooth progression of this app, The developer will factor in project planning and	specification into the early stages of the	project. The developer will	manage this app	using a structured and methodical approach, and this will	identify any objectives to	be achieved throughout	the course of the development and identify any	risks/dependencies,	 helping to agree responsibilities and define testing schedules.
