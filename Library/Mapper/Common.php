@@ -73,7 +73,7 @@ abstract class Common implements Custom_Mapper_CommonInterface {
      */
     public function find($id)
     {
-        $this->getDb()->where ("id", $id);
+        $this->getDb()->where ('id', $id);
         $row = $this->getDb()->getOne ($this->getDbTable());
         if (0 == count($row)) {
             //die("User does not exist");
@@ -138,7 +138,7 @@ abstract class Common implements Custom_Mapper_CommonInterface {
 
     public function delete($id)
     {
-        $$this->getDb()->where ('id', $id);
+        $this->getDb()->where ("id", $id);
         $this->getDb()->delete($this->getDbTable());
     }
 

@@ -57,15 +57,24 @@ angular.module('Aswat.controllers', [
   .controller('AdminImages', [function() {
 
   }])
-  .controller('AdminUsersListController', ['$scope', 'User', function($scope, User) {
+  .controller('AdminUsersListController', ['$scope', 'User','modalService', '$http', '$location', function($scope, User, modalService, $http, $location) {
   	$scope.users = User.get(); //fetch all Users.
  //console.debug($scope.users);
-  $scope.deleteUser = function(user) { // Delete user
-    if (popupService.showPopup('Really delete this?')) {
-      user.$delete(function() {
-        $window.location.href = ''; //redirect to home
-      });
-    }
+  $scope.deleteUser = function(id, login) { // Delete user
+  	
+    var custName = login;
+			    var modalOptions = {
+			            closeButtonText: 'Cancel',
+			            actionButtonText: 'Delete User',
+			            headerText: 'Delete ' + custName + '?',
+			            bodyText: 'Are you sure you want to delete this user?'
+			        };
+			        modalService.showModal({}, modalOptions).then(function (result) {
+			            $http.get('index.php?ajax=1&controller=User&action=delete&id='+ id ).success(function(response) { }
+			            ).then(function () {
+			               location.reload();
+			            });
+			        });
   };
 
   }])
@@ -77,13 +86,7 @@ angular.module('Aswat.controllers', [
   	 
 	
   }])
-  .controller('AdminUserEditController', ['$scope' , '$state', '$stateParams', 'User', '$http', function($scope, $state, $stateParams, User, $http) {
-	  /*$scope.user = {};
-	  $scope.updateUser = function() { //Update the edited user. Issues a PUT 
-	    $scope.user.$update(function() {
-	      $state.go('Users'); // on success go back to users i.e. Users state.
-	    });
-	  };*/
+  .controller('AdminUserEditController', ['$scope' , '$state', '$stateParams', '$location', '$http', function($scope, $state, $stateParams, $location, $http) {
 	$scope.updateUser = function (){
 		var responsePromise = $http.post(
 			'index.php?ajax=1&controller=user&action=update' ,
@@ -92,7 +95,10 @@ angular.module('Aswat.controllers', [
 			 'email' : $scope.user.email,
 			 		'role_id' : $scope.user.role_id}
 			  );
-			   $state.go('Users');
+			  responsePromise.success(function(data, status, headers, config) {
+			  	$location.path('/dashboard/users');
+			  });
+			   
 		
 	}; 
 	 

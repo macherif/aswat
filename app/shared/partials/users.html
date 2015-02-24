@@ -31,7 +31,7 @@
     <td> {{user.created}} </td>
     <td>
       <a class="btn btn-primary" ui-sref="viewUser({id:user.id})">View</a>
-      <a class="btn btn-danger"  ng-click="deleteUser(user)">Delete</a>
+      <a class="btn btn-danger"  ng-click="deleteUser(user.id,user.login)">Delete</a>
     </td>
   </tr>
 </table>

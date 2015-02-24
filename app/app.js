@@ -7,6 +7,7 @@ angular.module('Aswat', [
   'ngRoute',
   'ngCookies',
   'ngResource',
+  'ui.bootstrap',
   'ui.router',
   'angularFileUpload',
   'Aswat.filters',
@@ -43,8 +44,8 @@ constant('USER_ACCESS', {
   customer: ['/logout','/home','/products','/order', '/profile', '/purchase'],
   guest: ['/home','/products','/login','/signup','/order', '/credential']
 }).
-run(['$rootScope', '$location', '$cookieStore', '$http','USER_ROLES','USER_ACCESS',
-    function ($rootScope, $location, $cookieStore, $http, USER_ROLES, USER_ACCESS) {
+run(['$rootScope', '$location', '$cookieStore', '$http','USER_ROLES','USER_ACCESS',"$templateCache",
+    function ($rootScope, $location, $cookieStore, $http, USER_ROLES, USER_ACCESS, $templateCache) {
     	//console.debug($location);
     	if(!$rootScope.globals){$rootScope.globals = $cookieStore.get('globals') || {}; $rootScope.globals.currentUser = {};}
         // keep user logged in after page refresh
@@ -93,6 +94,16 @@ run(['$rootScope', '$location', '$cookieStore', '$http','USER_ROLES','USER_ACCES
                
             }
        });
+       $templateCache.put("template/modal/window.html",
+    "<div tabindex=\"-1\" role=\"dialog\" class=\"modal fade\" ng-class=\"{in: animate}\" ng-style=\"{'z-index': 1050 + index*10, display: 'block'}\">\n" +
+    "    <div class=\"modal-dialog\" ng-class=\"{'modal-sm': size == 'sm', 'modal-lg': size == 'lg'}\"><div class=\"modal-content\" modal-transclude></div></div>\n" +
+    "</div>");
+    $templateCache.put("template/modal/backdrop.html",
+    "<div class=\"modal-backdrop fade {{ backdropClass }}\"\n" +
+    "     ng-class=\"{in: animate}\"\n" +
+    "     ng-style=\"{'z-index': 1040 + (index && 1 || 0) + index*10}\"\n" +
+    "></div>\n" +
+    "");
     }]).config(['$stateProvider', function($stateProvider) {
   $stateProvider.state('Users', { // state for showing all Users
     url: '/dashboard/users',

@@ -47,4 +47,16 @@
          return $response ;
          
      }
+     public function update ($params){
+         $mapper = new UserMapper();
+             $response =  array($mapper->update($params));
+         return $response ;
+         
+     }
+     public function delete ($params){
+         $mapper = new UserMapper();
+             $response =  array($mapper->deleteUser($params['id']));
+         return $response ;
+         
+     }
  } 

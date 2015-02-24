@@ -116,4 +116,26 @@ class UserMapper extends Custom_Mapper_Common {
          )
          );
     }
+    public function update ($params) {
+        if (!isset($params['id'])){
+            return;
+        }
+        $user = $this->find($params['id']);
+        $user->setLogin($params['login'])
+            ->setEmail($params['email'])
+            ->setRoleId($params['role_id']);
+            $this->save($user);
+            return array('success'=>true);
+    }
+    public function deleteUser($id){
+        if (empty($id)){
+            return;
+        }
+        $user = $this->find($id);
+        $imageMapper = new ImageMapper();
+        $imageMapper->deleteImage($user->getImageId());
+        $this->delete($id);
+        return array('success'=>true);
+        
+    }
 }

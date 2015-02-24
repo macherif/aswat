@@ -33,7 +33,7 @@ class ImageMapper extends Custom_Mapper_Common {
     public function getDbTable()
     {
         if (null === $this->_tableName) {
-            $this->_tableName('orders');
+            $this->_tableName('images');
         }
         return $this->_tableName;
     }
@@ -71,5 +71,14 @@ class ImageMapper extends Custom_Mapper_Common {
          $image = new Image();
          $image->setImageName($fileDir);
         return $image;
+    }
+    
+    public function deleteImage($id){
+        if(empty($id)) return;
+        $image = $this->find($id);
+        $path = realpath($image->getImageName());
+        if(file_exists($path)) unlink($path);
+        //var_dump($image->getId());
+        $this->delete($image->getId());
     }
 }

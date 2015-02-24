@@ -20,7 +20,8 @@
         <script type="text/javascript" src="assets/vendor/angular/angular-route.min.js"></script>
         <script type="text/javascript" src="assets/vendor/angular/angular-sanitize.min.js"></script>
         <script type="text/javascript" src="assets/vendor/angular/angular-touch.min.js"></script>
-        <script type="text/javascript" src="assets/vendor/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+        <script type="text/javascript" src="assets/vendor/angular-bootstrap/ui-bootstrap-tpls-0.12.1.min.js"></script>
+        <script type="text/javascript" src="assets/vendor/angular-bootstrap/ui-bootstrap-0.12.1.min.js"></script>
         <script type="text/javascript" src="assets/vendor/angular-ui-router/release/angular-ui-router.js"></script>
         <script type="text/javascript" src="assets/vendor/ng-file-upload/angular-file-upload-shim.min.js"></script>
         <script type="text/javascript" src="assets/vendor/ng-file-upload/angular-file-upload.min.js"></script>
