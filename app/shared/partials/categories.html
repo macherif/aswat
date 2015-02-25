@@ -1,8 +1,27 @@
  <!-- Main component for a primary marketing message or call to action -->
       <div class="jumbotron">
         <h1>Categories</h1>
-        <p>Manage Products</p>
+        <p>Manage Categories</p>
         <p>
-          <a class="btn btn-lg btn-primary" href="#" role="button">View navbar docs &raquo;</a>
+          <a class="btn btn-lg btn-primary" ui-sref="newCategory()" href="#" role="button">Create a new Category &raquo;</a>
         </p>
       </div>
+
+ <div ng-if="categories.length == 0">
+ 	<h3>No Categories available on the store Database</h3> <a class="btn btn-lg btn-info" ui-sref="newCategory()" href="#" role="button">Add Your First Category &raquo;</a>
+ </div>
+<table class="table categorytable" ng-if="categories.length > 0">
+  <tr>
+    <td><h3>All Categories</h3></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr ng-repeat="category in categories">
+    <td>{{category.category_name}}</td>
+    <td>
+      <a class="btn btn-primary" ui-sref="viewCategory({id:category.id})">View</a>
+      <a class="btn btn-danger"  ng-click="deleteCategory(category.id,category.category_name)">Delete</a>
+    </td>
+  </tr>
+</table>

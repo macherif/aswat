@@ -1,0 +1,18 @@
+<div ng-repeat="category in categories">
+	
+
+<table class="table categorytable">
+  <tr>
+    <td><h3>Details for {{category.category_name}}</h3></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Category Name</td>
+    <td>{{category.category_name}}</td>
+  </tr>
+  
+</table>
+<div>
+  <a class="btn btn-primary" ui-sref="editCategory({id:category.id})">Edit</a>
+</div>
+</div>

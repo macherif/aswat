@@ -31,7 +31,17 @@ CREATE TABLE IF NOT EXISTS `categories` (
   `parent_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `category_name` (`category_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+
+--
+-- Contenu de la table `categories`
+--
+
+INSERT INTO `categories` (`id`, `category_name`, `enabled`, `parent_id`) VALUES
+(1, 'Apple iPhone', 1, 0),
+(2, 'Apple iPad', 1, 0),
+(3, 'Samsung S series', 1, 0),
+(4, 'Samsung Galaxy Pad Series', 1, 0);
 
 -- --------------------------------------------------------
 

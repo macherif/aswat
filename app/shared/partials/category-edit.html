@@ -1,0 +1,13 @@
+<div ng-repeat="category in categories" ng-controller="AdminCategoryEditController">
+<div class="form-group">
+  <label for="category_name" class="col-sm-2 control-label">Category Name</label>
+  <div class="col-sm-10">
+    <input type="text" ng-model="category.category_name" class="form-control" id="category_name" placeholder="Category Name Here" required />
+  </div>
+</div>
+<div class="form-group">
+  <div class="col-sm-offset-2 col-sm-10">
+    <input type="submit" class="btn btn-primary" ng-click="updateCategory({id:category.id})" ui-sref="editCategory({id:category.id})" value="Update"/>
+  </div>
+</div>
+</div>

@@ -14,7 +14,6 @@ angular.module('Aswat.controllers', [
   controller('Home', ['$scope', '$rootScope', 'USER_ROLES', '$cookieStore', function($scope, $rootScope, USER_ROLES, $cookieStore) {
 		 /* $scope.currentUser = null;*/
 		  $scope.userRoles = USER_ROLES;
-		  
 		  $scope.isAuthorized = function () {
 		  	 if($cookieStore.get('username')){
 		  	 	$scope.currentUser ={
@@ -40,7 +39,6 @@ angular.module('Aswat.controllers', [
 		  $scope.setCurrentUser = function (user) {
 		    $scope.currentUser = user;
 		  };
-		  //console.log($scope.isAuthorized());
   }])
   .controller('Products', [function() {
 
@@ -48,8 +46,63 @@ angular.module('Aswat.controllers', [
   .controller('AdminProducts', [function() {
 
   }])
-  .controller('AdminCategories', [function() {
+  .controller('AdminCategoriesListController', ['$scope', 'Categories', '$http','modalService', '$stateParams',function($scope, Categories, $http, modalService, $stateParams) {
+  	$scope.categories = Categories.get(); //fetch all Users.
+  $scope.deleteCategory = function(id, category_name) { // Delete user
+  	
+    var categoryName = category_name;
+			    var modalOptions = {
+			            closeButtonText: 'Cancel',
+			            actionButtonText: 'Delete Category',
+			            headerText: 'Delete ' + categoryName + '?',
+			            bodyText: 'Are you sure you want to delete this category ?'
+			        };
+			        modalService.showModal({}, modalOptions).then(function (result) {
+			            $http.get('index.php?ajax=1&controller=Category&action=delete&id='+ id ).success(function(response) { }
+			            ).then(function () {
+			               location.reload();
+			            });
+			        });
 
+  	};
+  }])
+  .controller('AdminCategoryViewController', ['$scope' , '$stateParams', '$http', function($scope, $stateParams, $http) {
+		$http.get('index.php?ajax=1&controller=Category&action=fetch&id='+$stateParams.id ).success(function(data) {
+      $scope.categories = data;
+    }); //Get 
+  }])
+  .controller('AdminCategoryEditController', ['$scope' , '$state', '$stateParams', '$location', '$http', function($scope, $state, $stateParams, $location, $http) {
+  		$scope.updateCategory = function (){
+		var responsePromise = $http.post(
+			'index.php?ajax=1&controller=Category&action=update' ,
+			 {'id' : $stateParams.id,
+			 	'category_name' : $scope.category.category_name});
+			 	
+		responsePromise.success(function(data, status, headers, config) {
+			  	$location.path('/dashboard/categories');
+			  });
+			   
+		
+	}; 
+	  $scope.loadCategory = function() { //Issues a GET request 
+		$http.get('index.php?ajax=1&controller=Category&action=fetch&id='+$stateParams.id ).success(function(data) {
+	      $scope.categories = data;
+	    }); //Get
+	  };
+	  $scope.loadCategory(); // Load category which can be edited on UI
+
+  }])
+  .controller('CategoryCreateController', ['$scope', '$http', '$location', function($scope, $http, $location) {
+	$scope.category = {};
+	$scope.addCategory = function (categoryName){
+		var responsePromise = $http.post(
+			'index.php?ajax=1&controller=Category&action=add' ,
+			 {'category_name' : categoryName}
+			  );
+		responsePromise.success(function(data, status, headers, config) {
+				$location.path('/dashboard/categories');
+				});
+	};
   }])
   .controller('AdminRoles', [function() {
 
@@ -59,7 +112,6 @@ angular.module('Aswat.controllers', [
   }])
   .controller('AdminUsersListController', ['$scope', 'User','modalService', '$http', '$location', function($scope, User, modalService, $http, $location) {
   	$scope.users = User.get(); //fetch all Users.
- //console.debug($scope.users);
   $scope.deleteUser = function(id, login) { // Delete user
   	
     var custName = login;
@@ -80,7 +132,6 @@ angular.module('Aswat.controllers', [
   }])
   .controller('AdminUserViewController', ['$scope' , '$stateParams', 'User','$http', function($scope, $stateParams, User, $http) {
   	$http.get('index.php?ajax=1&controller=User&action=fetch&id='+$stateParams.id ).success(function(data) {
-  		//console.debug(user);
       $scope.users = data;
     }); //Get 
   	 
@@ -90,10 +141,11 @@ angular.module('Aswat.controllers', [
 	$scope.updateUser = function (){
 		var responsePromise = $http.post(
 			'index.php?ajax=1&controller=user&action=update' ,
-			 {'id' : $stateParams.id,
+			 {
+			 	'id' : $stateParams.id,
 			 	'login' : $scope.user.login,
-			 'email' : $scope.user.email,
-			 		'role_id' : $scope.user.role_id}
+			 	'email' : $scope.user.email,
+			 	'role_id' : $scope.user.role_id}
 			  );
 			  responsePromise.success(function(data, status, headers, config) {
 			  	$location.path('/dashboard/users');
@@ -101,14 +153,11 @@ angular.module('Aswat.controllers', [
 			   
 		
 	}; 
-	 
 	  $scope.loadUser = function() { //Issues a GET request 
 		$http.get('index.php?ajax=1&controller=User&action=fetch&id='+$stateParams.id ).success(function(data) {
-  		//console.debug(user);
 	      $scope.users = data;
 	    }); //Get
 	  };
-	 
 	  $scope.loadUser(); // Load user which can be edited on UI
  }])
   .controller('Credential', ['$scope', '$http', '$location', '$cookieStore', 'USER_ROLES', function($scope, $http, $location, $cookieStore,USER_ROLES) {

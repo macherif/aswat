@@ -10,9 +10,39 @@
  */
 
  namespace Application\Controllers;
+ use Application\Mappers\CategoryMapper as CategoryMapper;
  class CategoryController {
      public function __construct ()
      {
          
+     }
+     public function fetch ($params){
+         $mapper = new CategoryMapper();
+         
+         if(!empty($params['id'])){
+             $response =  array($mapper->getOne($params['id']));
+         }else{
+             $response =  $mapper->fetch();
+         }
+         
+         return $response ;
+         
+     }
+     public function update ($params){
+         $mapper = new CategoryMapper();
+             $response =  array($mapper->update($params));
+         return $response ;
+         
+     }
+     public function delete ($params){
+         $mapper = new CategoryMapper();
+             $response =  array($mapper->deleteCategory($params['id']));
+         return $response ;
+         
+     }
+    public function add ($params){
+         $mapper = new CategoryMapper();
+             $response =  array($mapper->add($params));
+         return $response ;
      }
  } 

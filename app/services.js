@@ -25,7 +25,25 @@ angular.module('Aswat.services', []).
  	 }, query: { method: "GET", isArray: false }
   }
   );
-}).service('modalService', ['$modal',
+}).factory('Categories', function($resource) {
+  return $resource('index.php?ajax=1&controller=Category&action=fetch&id=:id', { id: '@id' }, {
+    update: {
+      method: 'PUT'
+    },
+    get: {
+    	method: 'JSON',
+    	 isArray: true,
+    	 interceptor: {
+      response: function(response) {
+        // expose response
+        return response;
+      }
+    }
+ 	 }, query: { method: "GET", isArray: false }
+  }
+  );
+})
+.service('modalService', ['$modal',
     function ($modal) {
 
         var modalDefaults = {

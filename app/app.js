@@ -19,16 +19,23 @@ config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/home', {templateUrl: 'app/shared/partials/home.html', controller: 'Home'});
   $routeProvider.when('/products', {templateUrl: 'app/shared/partials/products.html', controller: 'Products'});
   $routeProvider.when('/dashboard/products', {templateUrl: 'app/shared/partials/products-admin.html', controller: 'AdminProducts'});
-  $routeProvider.when('/dashboard/categories', {templateUrl: 'app/shared/partials/categories.html', controller: 'AdminCategories'});
+  //$routeProvider.when('/dashboard/categories', {templateUrl: 'app/shared/partials/categories.html', controller: 'AdminCategories'});
   $routeProvider.when('/dashboard/roles', {templateUrl: 'app/shared/partials/roles.html', controller: 'AdminRoles'});
   $routeProvider.when('/images', {templateUrl: 'app/shared/partials/images.html', controller: 'AdminImages'});
-  $routeProvider.when('/dashboard/users', {templateUrl: 'app/shared/partials/users.html', controller: 'AdminUsersListController'});
   $routeProvider.when('/credential', {templateUrl: 'app/shared/partials/credential.html', controller: 'Credential'});
   $routeProvider.when('/signup', {templateUrl: 'app/shared/partials/signup.html', controller: 'SignUp'});
   $routeProvider.when('/order', {templateUrl: 'app/shared/partials/order.html', controller: 'Order'});
   $routeProvider.when('/logout', {templateUrl: 'app/shared/partials/order.html', controller: 'LogOut'});
+  
+  $routeProvider.when('/dashboard/users', {templateUrl: 'app/shared/partials/users.html', controller: 'AdminUsersListController'});
   $routeProvider.when('/dashboard/users/:id/view', {templateUrl: 'app/shared/partials/user-view.html', controller: 'AdminUserViewController'});
   $routeProvider.when('/dashboard/users/:id/edit', {templateUrl: 'app/shared/partials/user-edit.html', controller: 'AdminUserEditController'});
+  
+  $routeProvider.when('/dashboard/categories', {templateUrl: 'app/shared/partials/categories.html', controller: 'AdminCategoriesListController'});
+  $routeProvider.when('/dashboard/categories/:id/view', {templateUrl: 'app/shared/partials/category-view.html', controller: 'AdminCategoryViewController'});
+  $routeProvider.when('/dashboard/categories/:id/edit', {templateUrl: 'app/shared/partials/category-edit.html', controller: 'AdminCategoryEditController'});
+  $routeProvider.when('/dashboard/categories/new', {templateUrl: 'app/shared/partials/category-add.html', controller: 'CategoryCreateController'});
+  
   $routeProvider.otherwise({redirectTo: '/home'});
 }]).
 constant('USER_ROLES', {
@@ -40,13 +47,13 @@ constant('USER_ROLES', {
 }).
 constant('USER_ACCESS', {
   all: '*',
-  admin: ['/dashboard','/logout','/home','/dashboard/images', '/dashboard/products', '/dashboard/categories', , '/dashboard/users'],
+  admin: ['/dashboard','/logout','/home','/dashboard/images',
+   '/dashboard/products', '/dashboard/categories', , '/dashboard/users'],
   customer: ['/logout','/home','/products','/order', '/profile', '/purchase'],
   guest: ['/home','/products','/login','/signup','/order', '/credential']
 }).
 run(['$rootScope', '$location', '$cookieStore', '$http','USER_ROLES','USER_ACCESS',"$templateCache",
     function ($rootScope, $location, $cookieStore, $http, USER_ROLES, USER_ACCESS, $templateCache) {
-    	//console.debug($location);
     	if(!$rootScope.globals){$rootScope.globals = $cookieStore.get('globals') || {}; $rootScope.globals.currentUser = {};}
         // keep user logged in after page refresh
         
@@ -86,14 +93,16 @@ run(['$rootScope', '$location', '$cookieStore', '$http','USER_ROLES','USER_ACCES
 	            		}
             		break;
             		case 'admin':
-	            		/*if(-1 == USER_ACCESS.admin.indexOf($location.path())){
+	            		if((-1 == USER_ACCESS.admin.indexOf($location.path()) ) && (-1 != USER_ACCESS.admin.indexOf('dashboard') ) ){
+	            			alert('access');
 	            			$location.path('/login');
-	            		}*/
+	            		}
             		break;
             	}
                
             }
        });
+       //BEGIN MODAL TPL
        $templateCache.put("template/modal/window.html",
     "<div tabindex=\"-1\" role=\"dialog\" class=\"modal fade\" ng-class=\"{in: animate}\" ng-style=\"{'z-index': 1050 + index*10, display: 'block'}\">\n" +
     "    <div class=\"modal-dialog\" ng-class=\"{'modal-sm': size == 'sm', 'modal-lg': size == 'lg'}\"><div class=\"modal-content\" modal-transclude></div></div>\n" +
@@ -104,7 +113,10 @@ run(['$rootScope', '$location', '$cookieStore', '$http','USER_ROLES','USER_ACCES
     "     ng-style=\"{'z-index': 1040 + (index && 1 || 0) + index*10}\"\n" +
     "></div>\n" +
     "");
+    //END MODAL TPL
+    
     }]).config(['$stateProvider', function($stateProvider) {
+    	//BEGIN USER DASHBOARD
   $stateProvider.state('Users', { // state for showing all Users
     url: '/dashboard/users',
     templateUrl: 'app/shared/partials/users.html',
@@ -121,5 +133,27 @@ run(['$rootScope', '$location', '$cookieStore', '$http','USER_ROLES','USER_ACCES
     url: '/dashboard/users/:id/edit',
     templateUrl: 'app/shared/partials/user-edit.html',
     controller: 'AdminUserEditController'
-  });
+  })
+  	//END USER DASHBOARD
+  	
+  	//BEGIN CATEGORIES DASHBOARD
+  	.state('Categories', { // state for showing all Users
+    url: '/dashboard/categories',
+    templateUrl: 'app/shared/partials/categories.html',
+    controller: 'AdminCategoriesListController'
+  }).state('viewCategory', { //state for showing single User
+    url: '/dashboard/categories/:id/view',
+    templateUrl: 'app/shared/partials/category-view.html',
+    controller: 'AdminCategoryViewController'
+  }).state('newCategory', { //state for adding a new User
+    url: '/dashboard/categories/new',
+    templateUrl: 'app/shared/partials/category-add.html',
+    controller: 'CategoryCreateController'
+  }).state('editCategory', { //state for updating a User
+    url: '/dashboard/categories/:id/edit',
+    templateUrl: 'app/shared/partials/category-edit.html',
+    controller: 'AdminCategoryEditController'
+  })
+  	//END CATEGORIES DASHBOARD
+  ;
 }]);

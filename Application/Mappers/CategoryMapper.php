@@ -10,6 +10,7 @@
  */
  namespace Application\Mappers;
 use Library\Mapper\Common as Custom_Mapper_Common;
+use Application\Models\Category as Category;
 class CategoryMapper extends Custom_Mapper_Common {
     // __construct function overload to define type of storage.
     public function __construct()
@@ -40,7 +41,7 @@ class CategoryMapper extends Custom_Mapper_Common {
      */
     public function _hydrate($row)
     {
-        $category = new Application\Models\Category();
+        $category = new Category();
         if(is_array($row)){
             $row = (object) $row;
         }
@@ -51,4 +52,33 @@ class CategoryMapper extends Custom_Mapper_Common {
         }
         return $category;
     }
+    public function update ($params) {
+        if (!isset($params['id'])){
+            return;
+        }
+        $category = $this->find($params['id']);
+        $category->setCategoryName($params['category_name']);
+            $this->save($category);
+            return array('success'=>true);
+    }
+    public function deleteCategory($id){
+        if (empty($id)){
+            return;
+        }
+        $category = $this->find($id);
+        /**
+         * @todo update products with this category with 0 as category_id
+         */
+        $this->delete($id);
+        return array('success'=>true);
+        
+    }
+    public function add ($params){
+         $category = new Category();
+         $category ->setCategoryName($params['category_name'])
+                   ->setEnabled(1)
+                   ->setParentId(0);
+             $response =  $this->save($category);
+         return $response ;
+     }
 }
