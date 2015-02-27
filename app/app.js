@@ -36,6 +36,11 @@ config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/dashboard/categories/:id/edit', {templateUrl: 'app/shared/partials/category-edit.html', controller: 'AdminCategoryEditController'});
   $routeProvider.when('/dashboard/categories/new', {templateUrl: 'app/shared/partials/category-add.html', controller: 'CategoryCreateController'});
   
+  $routeProvider.when('/dashboard/products', {templateUrl: 'app/shared/partials/products-admin.html', controller: 'AdminProductsListController'});
+  $routeProvider.when('/dashboard/products/:id/view', {templateUrl: 'app/shared/partials/product-admin-view.html', controller: 'AdminProductViewController'});
+  $routeProvider.when('/dashboard/products/:id/edit', {templateUrl: 'app/shared/partials/product-admin-edit.html', controller: 'AdminProductEditController'});
+  $routeProvider.when('/dashboard/products/new', {templateUrl: 'app/shared/partials/product-admin-add.html', controller: 'ProductCreateController'});
+  
   $routeProvider.otherwise({redirectTo: '/home'});
 }]).
 constant('USER_ROLES', {
@@ -155,5 +160,25 @@ run(['$rootScope', '$location', '$cookieStore', '$http','USER_ROLES','USER_ACCES
     controller: 'AdminCategoryEditController'
   })
   	//END CATEGORIES DASHBOARD
+  	
+  	//BEGIN Products DASHBOARD
+  	.state('Products', { // state for showing all Users
+    url: '/dashboard/products',
+    templateUrl: 'app/shared/partials/products-admin.html',
+    controller: 'AdminProductsListController'
+  }).state('viewProduct', { //state for showing single User
+    url: '/dashboard/products/:id/view',
+    templateUrl: 'app/shared/partials/product-admin-view.html',
+    controller: 'AdminProductViewController'
+  }).state('newProduct', { //state for adding a new User
+    url: '/dashboard/products/new',
+    templateUrl: 'app/shared/partials/product-admin-add.html',
+    controller: 'ProductCreateController'
+  }).state('editProduct', { //state for updating a User
+    url: '/dashboard/products/:id/edit',
+    templateUrl: 'app/shared/partials/products-admin-edit.html',
+    controller: 'AdminProductEditController'
+  })
+  	//END Products DASHBOARD
   ;
 }]);

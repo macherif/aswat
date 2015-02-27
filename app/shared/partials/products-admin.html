@@ -1,0 +1,27 @@
+ <!-- Main component for a primary marketing message or call to action -->
+      <div class="jumbotron">
+        <h1>Products Dashboard</h1>
+        <p>Manage Products</p>
+        <p>
+          <a class="btn btn-lg btn-primary" ui-sref="newProduct()" href="#" role="button">Create a new Product &raquo;</a>
+        </p>
+      </div>
+
+ <div ng-if="products.length == 0">
+ 	<h3>No Products available on the store Database</h3> <a class="btn btn-lg btn-info" ui-sref="newCategory()" href="#" role="button">Add Your First Product &raquo;</a>
+ </div>
+<table class="table producttable" ng-if="products.length > 0">
+  <tr>
+    <td><h3>All Products</h3></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr ng-repeat="product in products">
+    <td>{{product.product_name}}</td>
+    <td>
+      <a class="btn btn-primary" ui-sref="viewProduct({id:product.id})">View</a>
+      <a class="btn btn-danger"  ng-click="deleteProduct(product.id,product.product_name)">Delete</a>
+    </td>
+  </tr>
+</table>

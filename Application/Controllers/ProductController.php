@@ -10,9 +10,39 @@
  */
 
  namespace Application\Controllers;
+ use Application\Mappers\ProductMapper as ProductMapper; 
  class ProductController {
      public function __construct ()
      {
          
+     }
+     public function fetch ($params){
+         $mapper = new ProductMapper();
+         
+         if(!empty($params['id'])){
+             $response =  array($mapper->getOne($params['id']));
+         }else{
+             $response =  $mapper->fetch();
+         }
+         
+         return $response ;
+         
+     }
+     public function update ($params){
+         $mapper = new ProductMapper();
+             $response =  array($mapper->update($params));
+         return $response ;
+         
+     }
+     public function delete ($params){
+         $mapper = new ProductMapper();
+             $response =  array($mapper->deleteProduct($params['id']));
+         return $response ;
+         
+     }
+    public function add ($params){
+         $mapper = new ProductMapper();
+             $response =  array($mapper->add($params));
+         return $response ;
      }
  } 

@@ -46,8 +46,10 @@ angular.module('Aswat.controllers', [
   .controller('AdminProducts', [function() {
 
   }])
+  
+  //BEGIN CATEGORIES ADMIN
   .controller('AdminCategoriesListController', ['$scope', 'Categories', '$http','modalService', '$stateParams',function($scope, Categories, $http, modalService, $stateParams) {
-  	$scope.categories = Categories.get(); //fetch all Users.
+  	$scope.categories = Categories.get(); //fetch all Categories.
   $scope.deleteCategory = function(id, category_name) { // Delete user
   	
     var categoryName = category_name;
@@ -104,6 +106,97 @@ angular.module('Aswat.controllers', [
 				});
 	};
   }])
+  
+  //END CATEGORIES ADMIN
+  
+  //BEGIN PRODUCTS ADMIN
+  .controller('AdminProductsListController', ['$scope', 'Products', '$http','modalService', '$stateParams',function($scope, Products, $http, modalService, $stateParams) {
+  	$scope.products = Products.get(); //fetch all Users.
+  $scope.deleteProduct = function(id, product_name) { // Delete user
+  	
+    var productName = product_name;
+			    var modalOptions = {
+			            closeButtonText: 'Cancel',
+			            actionButtonText: 'Delete Product',
+			            headerText: 'Delete ' + productName + '?',
+			            bodyText: 'Are you sure you want to delete this prodect ?'
+			        };
+			        modalService.showModal({}, modalOptions).then(function (result) {
+			            $http.get('index.php?ajax=1&controller=Product&action=delete&id='+ id ).success(function(response) { }
+			            ).then(function () {
+			               location.reload();
+			            });
+			        });
+
+  	};
+  }])
+  .controller('AdminProductViewController', ['$scope' , '$stateParams', '$http', function($scope, $stateParams, $http) {
+		$http.get('index.php?ajax=1&controller=Product&action=fetch&id='+$stateParams.id ).success(function(data) {
+      $scope.products = data;
+    }); //Get 
+  }])
+  .controller('AdminProductEditController', ['$scope' , '$state', '$stateParams', '$location', '$http', function($scope, $state, $stateParams, $location, $http) {
+  		$scope.updateProduct = function (){
+		var responsePromise = $http.post(
+			'index.php?ajax=1&controller=Product&action=update' ,
+			 {'id' : $stateParams.id,
+			 	'product_name' : $scope.product.product_name});
+			 	
+		responsePromise.success(function(data, status, headers, config) {
+			  	$location.path('/dashboard/products');
+			  });
+			   
+		
+	}; 
+	  $scope.loadProduct = function() { //Issues a GET request 
+		$http.get('index.php?ajax=1&controller=Product&action=fetch&id='+$stateParams.id ).success(function(data) {
+	      $scope.products = data;
+	    }); //Get
+	  };
+	  $scope.loadProduct(); // Load category which can be edited on UI
+
+  }])
+  .controller('ProductCreateController', ['$scope', '$http', '$location', '$upload', 'Categories', function($scope, $http, $location, $upload, Categories) {
+		$scope.categories = Categories.get(); //fetch all Categories.
+		$scope.model = {};
+            $scope.selectedFile = [];
+            $scope.uploadProgress = 0;
+			//$scope.error = {};
+            $scope.uploadProduct = function () {
+                var file = $scope.selectedFile[0];
+                $scope.upload = $upload.upload({
+                    url: 'index.php?ajax=1&controller=Product&action=add',
+                    method: 'POST',
+                    data: {
+                    	'product_name':$scope.product_name,
+                    	 'teaser': $scope.teaser,
+                    	  'description':$scope.description,
+                    	  'category_id':$scope.category_id,
+                    	  'price':$scope.price
+                    	  },
+                    file: file
+                }).progress(function (evt) {
+                    $scope.uploadProgress = parseInt(100.0 * evt.loaded / evt.total, 10);
+                }).success(function (data) {
+                    if(data.error){
+						$scope.error = data.msg;
+						$scope.dataLoading = false;
+						return;
+					}else{
+						$location.path('/dashboard/products');
+					}
+                });
+            };
+
+            $scope.onFileSelect = function ($files) {
+                $scope.uploadProgress = 0;
+                $scope.selectedFile = $files;
+            };
+	
+  }])
+  
+  //END PRODUCTS ADMIN
+  
   .controller('AdminRoles', [function() {
 
   }])

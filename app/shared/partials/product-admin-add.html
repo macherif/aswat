@@ -1,0 +1,81 @@
+<style>
+	.form-product {
+		max-width: 330px;
+		padding: 15px;
+		margin: 0 auto;
+	}
+	.form-product .form-product-heading, .form-product .checkbox {
+		margin-bottom: 10px;
+	}
+	.form-product .checkbox {
+		font-weight: normal;
+	}
+	.form-product .form-control {
+		position: relative;
+		height: auto;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+		padding: 10px;
+		font-size: 16px;
+		margin-bottom: 10px;
+	}
+	.form-product .form-control:focus {
+		z-index: 2;
+	}
+</style>
+
+<form  class="form-product" name="formProduct" ng-controller="ProductCreateController" ng-submit="uploadProduct()"  enctype="multipart/form-data">
+	<h2 class="form-product-heading">Adding a new product</h2>
+	<div class="alert alert-danger" role="alert" ng-show="error">
+		{{ error.message }}
+	</div>
+	<label class="">Product Picture</label>
+	<input type="file" ng-file-select="onFileSelect($files)" name="file" class="form-control" ng-model="file" required />
+	<span style="color:red" ng-show="myForm.file.$dirty && myForm.file.$invalid">
+  <span ng-show="formProduct.file.$error.required">Picture is required.</span>
+  </span>
+  <div class="progress" style="margin-top: 10px;">
+                    <div class="progress-bar" progress-bar="uploadProgress" role="progressbar">
+                      <span ng-bind="uploadProgress"></span>
+                      <span>%</span>
+                    </div>
+   </div>
+	<input name="product_name" class="form-control" maxlength="100" ng-model="product_name" required placeholder="The Product Name">
+	<span style="color:red" ng-show="myForm.product_name.$dirty && myForm.product_name.$invalid">
+  <span ng-show="formProduct.pseudo.$error.required">Product Name is required.</span>
+  </span>
+	<label for="teaser" class="">Short Product Description </label>
+	<textarea rows="4" cols="50" name="teaser" ng-model="teaser" class="form-control"  maxlength="400" required placeholder="Add a short description here">
+		</textarea>
+	<span style="color:red" ng-show="myForm.teaser.$dirty && myForm.teaser.$invalid">
+  <span ng-show="formProduct.teaser.$error.required">Short Description is required.</span>
+  </span>
+	<label for="description" class="">Long Product Description </label>
+	<textarea rows="4" cols="50" name="description" ng-model="description" class="form-control" required placeholder="Add a full description here">
+		</textarea>
+	<span style="color:red" ng-show="myForm.description.$dirty && myForm.description.$invalid">
+  <span ng-show="formProduct.teaser.$error.required">Full Description is required.</span>
+  </span>
+  <label for="category_id" class="">Choose a Product Category </label>
+  <select name="category_id" id="category_id" ng-model="category_id" class="form-control" required
+  ng-options="category.id as category.category_name for category in categories" >
+  </select>
+  <span style="color:red" ng-show="myForm.category_id.$dirty && myForm.category_id.$invalid">
+  <span ng-show="formProduct.category_id.$error.required">Category is required.</span>
+  </span>
+  
+  <label for="price" class="">Product Price </label>
+  <input type="number" maxlength="6" required name="price" ng-model="price" class="form-control" placeholder="Price" />
+	<span style="color:red" ng-show="myForm.price.$dirty && myForm.price.$invalid">
+  <span ng-show="formProduct.price.$error.required">Price is required.</span>
+  </span>
+	<p>
+		<button class="btn btn-lg btn-primary btn-block" type="submit" ng-disabled="formProduct.file.$dirty && formProduct.file.$invalid || formProduct.teaser.$dirty && myForm.teaser.$invalid ||
+  formProduct.description.$dirty && formProduct.description.$invalid || formProduct.price.$dirty && formProduct.price.$invalid" >
+			Add This Product To The Store
+		</button>
+	</p>
+	
+	
+</form>
