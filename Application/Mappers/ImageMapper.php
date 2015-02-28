@@ -76,9 +76,19 @@ class ImageMapper extends Custom_Mapper_Common {
     public function deleteImage($id){
         if(empty($id)) return;
         $image = $this->find($id);
-        $path = realpath($image->getImageName());
+        $path = '';
+        if($image) 
+        {
+            $path = realpath($image->getImageName());
         if(file_exists($path)) unlink($path);
         //var_dump($image->getId());
         $this->delete($image->getId());
+        }
+    }
+    
+    public function ImgPath($id){
+        if(empty($id)) return;
+        $image = $this->find($id);
+        return $image->getImageName();
     }
 }

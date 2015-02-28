@@ -176,7 +176,7 @@ run(['$rootScope', '$location', '$cookieStore', '$http','USER_ROLES','USER_ACCES
     controller: 'ProductCreateController'
   }).state('editProduct', { //state for updating a User
     url: '/dashboard/products/:id/edit',
-    templateUrl: 'app/shared/partials/products-admin-edit.html',
+    templateUrl: 'app/shared/partials/product-admin-edit.html',
     controller: 'AdminProductEditController'
   })
   	//END Products DASHBOARD

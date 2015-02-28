@@ -28,8 +28,18 @@ class Bootstrap {
             $controller = 'Application\Controllers\\' . ucfirst($this -> params['controller'] . 'Controller');
             $this -> controller = new $controller();
             $action = $this -> params['action'];
-            header('Content-Type: application/json');
-            echo json_encode($this -> controller -> $action($this -> params));
+            if(('Image' == ucfirst($this -> params['controller']) ) && ('ImgPath' == $this -> params['action'])){
+                $path = $this -> controller -> $action($this -> params);
+                //var_dump($path); die;
+                $filename = basename($path[0]);
+                $file_extension = strtolower(substr(strrchr($filename,"."),1));
+                header('Content-type: image/' . $file_extension);
+                readfile(realpath($path[0]));
+            }else{
+              header('Content-Type: application/json');
+              echo json_encode($this -> controller -> $action($this -> params));  
+            }
+            
         } else {
             require_once 'Application/Views/header.php';
             require_once 'Application/Views/footer.php';

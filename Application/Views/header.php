@@ -62,19 +62,19 @@
 							<a href="#/products">Products</a>
 						</li>
 						<li class="hidden" role="presentation">
-                            <a href="#/dashboard/products">Products</a>
+                            <a href="#/dashboard/products">Manage Products</a>
                         </li>
 						<li class="hidden" role="presentation">
-							<a href="#/dashboard/categories">Categories</a>
+							<a href="#/dashboard/categories">Manage Categories</a>
 						</li>
 						<li class="hidden" role="presentation">
-							<a href="#/dashboard/users">Users</a>
+							<a href="#/dashboard/users">Manage Users</a>
 						</li>
 						<li  class="hidden" role="presentation">
 							<a href="#/order">Shopping Cart</a>
 						</li>
 						<li class="hidden" role="presentation">
-                            <a href="#/signup">Sign In</a>
+                            <a href="#/signup">Register</a>
                         </li>
 						<li class="hidden" role="presentation">
 							<a href="#/credential">Log In</a>

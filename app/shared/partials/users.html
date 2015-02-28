@@ -12,7 +12,8 @@
     <td></td>
   </tr>
   <tr ng-repeat="user in users">
-    <td>{{user.login}}</td>
+    <td><div> {{user.login}}</div>
+    	<div><img width="100px" height="100px" ng-src="index.php?ajax=1&controller=Image&action=ImgPath&id={{user.image_id}}" src="" /></div></td>
     <td>
     	
     	<span ng-switch on="user.role_id">

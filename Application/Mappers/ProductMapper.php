@@ -66,10 +66,26 @@ class ProductMapper extends Custom_Mapper_Common {
         $product->setProductName($params['product_name'])
                  ->setTeaser($params['teaser'])
                  ->setDescription($params['description'])
-                 ->setImageId($imageId)
+                 //->setImageId($imageId)
                  ->setPrice($params['price']);
             $this->save($product);
             return array('success'=>true);
+    }
+    public function updateImage($params){
+        $row = (array) json_decode($params['data']);
+        $imageMapper = new ImageMapper(); 
+        $imageMapper->deleteImage($row['image_id']);
+        $imageObj = $imageMapper->upload($_FILES['file'], time());
+        $product = $this->find($row['id']);
+        $imageObj->setAlt('Picture of ' . $product->getProductName());
+            $imageObj->setTitle('Picture of ' . $product->getProductName());
+            $imageObj->setWidth('');
+            $imageObj->setHeight('');
+            $imageObj = $imageMapper->save($imageObj);
+        $product->setImageId($imageObj->getId());
+        $response =  $this->save($product);
+         return $response ;
+        
     }
     public function deleteProduct($id){
         if (empty($id)){

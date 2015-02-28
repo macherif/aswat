@@ -34,6 +34,11 @@
          return $response ;
          
      }
+     public function updateImage($params){
+         $mapper = new ProductMapper();
+             $response =  array($mapper->updateImage($params));
+         return $response ;
+     }
      public function delete ($params){
          $mapper = new ProductMapper();
              $response =  array($mapper->deleteProduct($params['id']));

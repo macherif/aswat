@@ -130,24 +130,60 @@ angular.module('Aswat.controllers', [
 
   	};
   }])
-  .controller('AdminProductViewController', ['$scope' , '$stateParams', '$http', function($scope, $stateParams, $http) {
-		$http.get('index.php?ajax=1&controller=Product&action=fetch&id='+$stateParams.id ).success(function(data) {
-      $scope.products = data;
-    }); //Get 
+  .controller('AdminProductViewController', ['$scope' , '$stateParams', '$http', 'Categories', function($scope, $stateParams, $http, Categories) {
+	$scope.categories = Categories.get(); //fetch all Categories.
+	$http.get('index.php?ajax=1&controller=Product&action=fetch&id='+$stateParams.id )
+	.success(function(data) {
+      		$scope.products = data;
+      		
+      });
+    
   }])
-  .controller('AdminProductEditController', ['$scope' , '$state', '$stateParams', '$location', '$http', function($scope, $state, $stateParams, $location, $http) {
+  .controller('AdminProductEditController', ['$scope' , '$state', '$stateParams', '$location', '$http', '$upload', 'Categories', function($scope, $state, $stateParams, $location, $http,$upload,Categories) {
+  		$scope.categories = Categories.get(); //fetch all Categories.
+		$scope.model = {};
+            $scope.selectedFile = [];
+            $scope.uploadProgress = 0;
   		$scope.updateProduct = function (){
 		var responsePromise = $http.post(
 			'index.php?ajax=1&controller=Product&action=update' ,
 			 {'id' : $stateParams.id,
-			 	'product_name' : $scope.product.product_name});
+			 	'product_name' : $scope.product.product_name,
+			 	'teaser' : $scope.product.teaser,
+			 	'description' : $scope.product.description,
+			 	'category_id' : $scope.product.category_id,
+			 	'price' : $scope.product.price});
 			 	
-		responsePromise.success(function(data, status, headers, config) {
-			  	$location.path('/dashboard/products');
+				responsePromise.success(function(data, status, headers, config) {
 			  });
-			   
+			  //console.log($scope.file);
+			  if(null != $scope.file){
+						 var file = $scope.file;
+		                $scope.upload = $upload.upload({
+		                    url: 'index.php?ajax=1&controller=Product&action=updateImage',
+		                    method: 'POST',
+		                    data: {
+		                    	'id':$stateParams.id,
+		                    	'image_id' : $scope.product.image_id
+		                    	  },
+		                    file: file
+		                }).progress(function (evt) {
+		                    $scope.uploadProgress = parseInt(100.0 * evt.loaded / evt.total, 10);
+		                }).success(function (data) {
+		                    if(data.error){
+								$scope.error = data.msg;
+								$scope.dataLoading = false;
+								return;
+							}else{
+								$location.path('/dashboard/products');
+							}
+		                });
+					}else{
+						$location.path('/dashboard/products');
+					}
 		
 	}; 
+	
 	  $scope.loadProduct = function() { //Issues a GET request 
 		$http.get('index.php?ajax=1&controller=Product&action=fetch&id='+$stateParams.id ).success(function(data) {
 	      $scope.products = data;
