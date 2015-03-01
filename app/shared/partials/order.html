@@ -3,6 +3,31 @@
         <h1>Purchase</h1>
         <p>Validate your Shopping Cart</p>
         <p>
-          <a class="btn btn-lg btn-primary" href="#" role="button"> Purchase &raquo;</a>
+          <a class="btn btn-lg btn-primary" ng-click="purchase()" role="button"> Purchase &raquo;</a>
         </p>
       </div>
+
+<div ng-if="products.length == 0">
+ 	<h3>No Products available on your Shopping Cart</h3> 
+ </div>
+
+ <div style="">
+ 	
+<div class="row" ng-if="products.length > 0">
+	 <h3>Your Shopping Cart</h3>
+   <div class="col-md-4" style="" ng-repeat="product in products" ng-controller="Order">
+    
+    	<h3> {{product.product_name}}</h3>
+    	<div> {{product.price}} $</div>
+    	<img width="250px" height="250px" ng-src="index.php?ajax=1&controller=Image&action=ImgPath&id= {{product.image_id}}" src="" />
+    
+    <div style=" max-height: 260px; min-height: 260px; ">
+    	
+    	{{product.description}}
+    	
+    </div>
+    <div>
+      </div>
+  </div>
+</div>
+</div>

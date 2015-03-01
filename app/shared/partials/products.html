@@ -1,8 +1,41 @@
  <!-- Main component for a primary marketing message or call to action -->
       <div class="jumbotron">
-        <h1>Products</h1>
-        <p>Browsing our Products.</p>
+        <h1>Browsing our Products</h1>
         <p>
-          <a class="btn btn-lg btn-primary" href="#" role="button">View navbar docs &raquo;</a>
+          <a class="btn btn-lg btn-primary" href="#/order" role="button">View Your Cart &raquo;</a>
         </p>
       </div>
+
+<div ng-if="products.length == 0">
+ 	<h3>No Products available on the store Database</h3> 
+ </div>
+
+ <div style="" ng-if="products.length > 0" ng-controller="Products">
+ 	 <h3>All Products</h3>
+ <table>
+ 	<tr>
+    <td>Category</td>
+    <td> 
+    	<select name="category_id" id="category_id"  ng-model="category_id" class="form-control" ng-options="category.id as category.category_name for category in categories" >
+		  </select>
+	</td>
+  </tr>
+ </table>
+<div class="row" >
+   <div class="col-md-4 animate-if" ng-if="product.category_id == category_id || category_id == 0" style="" ng-repeat="product in products" >
+    
+    	<h3> {{product.product_name}}</h3>
+    	<div> {{product.price}} $</div>
+    	<img width="250px" height="250px" ng-src="index.php?ajax=1&controller=Image&action=ImgPath&id={{product.image_id}}" src="" />
+    
+    <div style=" max-height: 260px; min-height: 260px; ">
+    	
+    	{{product.teaser}}
+    	<a class="btn btn-primary" ng-click="viewFullProduct(product.id,product.product_name,product.description,product.image_id, product.price)">View More</a>
+    
+    </div>
+    <div>
+      </div>
+  </div>
+</div>
+</div>

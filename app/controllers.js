@@ -40,13 +40,53 @@ angular.module('Aswat.controllers', [
 		    $scope.currentUser = user;
 		  };
   }])
-  .controller('Products', [function() {
-
-  }])
-  .controller('AdminProducts', [function() {
+  .controller('Products', ['$scope', '$cookieStore', 'Products', 'Categories', 'modalService', '$stateParams', function($scope, $cookieStore, Products, Categories, modalService, $stateParams) {
+  	$scope.categories = $scope.categories ? $scope.categories : Categories.get() ;
+  	$scope.categories.push({'id':0, 'category_name':'All'});
+  	$scope.category_id = 0;
+  	$scope.products = Products.get(); //fetch all Products.
+  	$scope.viewFullProduct = function(id,product_name,description,image_id, price){
+  		var modalOptions = {
+			            closeButtonText: 'Cancel',
+			            actionButtonText: 'Add To My Cart',
+			            headerText: product_name + ' ' + price + '$',
+			            bodyText:  description
+			        };
+			        modalService.showModal({}, modalOptions).then(function (result) {
+			            if (!$cookieStore.get('shoppingCart')) $cookieStore.put('shoppingCart',[]);
+			            var store = $cookieStore.get('shoppingCart');
+			           store.push({
+			            	'id' : id,
+			            	'product_name': product_name,
+			            	'description' : description,
+			            	'image_id' : image_id,
+			            	'price' : price
+			            });
+			             $cookieStore.put('shoppingCart',store);
+			        });
+  	};
 
   }])
   
+  .controller('Order', ['$scope', '$cookieStore', '$location' , 'modalService', function($scope, $cookieStore,$location, modalService) {
+		$scope.products = $cookieStore.get('shoppingCart') || [];
+		$scope.purchase = function(){
+			if(!$cookieStore.get('username')){
+				var modalOptions = {
+			            closeButtonText: 'Cancel',
+			            actionButtonText: 'Log In',
+			            headerText: 'Log In Now ?',
+			            bodyText: 'You must be logged in to checkout your shopping cart'
+			        };
+			        modalService.showModal({}, modalOptions).then(function (result) {
+			            $location.path('/credential');
+			        });
+			}else{
+				$cookieStore.remove('shoppingCart');
+				location.reload();
+			}
+		};
+  }])
   //BEGIN CATEGORIES ADMIN
   .controller('AdminCategoriesListController', ['$scope', 'Categories', '$http','modalService', '$stateParams',function($scope, Categories, $http, modalService, $stateParams) {
   	$scope.categories = Categories.get(); //fetch all Categories.
@@ -363,9 +403,6 @@ angular.module('Aswat.controllers', [
                 $scope.uploadProgress = 0;
                 $scope.selectedFile = $files;
             };
-
-  }])
-  .controller('Order', [function() {
 
   }]).controller('LogOut', ['$scope', '$cookieStore', '$location', function($scope, $cookieStore, $location) {
 						$cookieStore.remove('image');

@@ -6,7 +6,7 @@ USE aswat;
 -- http://www.phpmyadmin.net
 --
 -- Client: localhost
--- Généré le : Sam 28 Février 2015 à 02:49
+-- Généré le : Dim 01 Mars 2015 à 02:29
 -- Version du serveur: 5.5.41
 -- Version de PHP: 5.3.10-1ubuntu3.16
 
@@ -172,4 +172,3 @@ CREATE TABLE IF NOT EXISTS `users` (
 INSERT INTO `users` (`id`, `login`, `password`, `email`, `created`, `enabled`, `image_id`, `role_id`) VALUES
 (10, 'customer', '91ec1f9324753048c0096d036a694f86', 'customer@aswat-telecom.com', '0000-00-00 00:00:00', 1, 12, 2),
 (11, 'admin', '21232f297a57a5a743894a0e4a801fc3', 'admin@aswat-telecom.com', '2015-02-16 02:07:07', 1, 13, 3);
-

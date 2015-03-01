@@ -8,6 +8,7 @@ angular.module('Aswat', [
   'ngCookies',
   'ngResource',
   'ui.bootstrap',
+  'ui.bootstrap.carousel',
   'ui.router',
   'angularFileUpload',
   'Aswat.filters',

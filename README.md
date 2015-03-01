@@ -5,6 +5,14 @@
  
  A PHP/AngularJs Application for test purpose
  The	purpose of this application is to be an evaluation or an assessment by	**ASWAT-TELECOM** .
+     Prepare a system mimicking a shopping cart which has a backend made in nodeJS/PHP/Python and fronted using AngularJS
+    The backend should be able to add/edit/delete products and product categories
+    Frontend should be able to list the product and product categories and add items to the cart and save it for later checkout (using JS local storage)
+    Database can be of your choice (mysql/mongodb/flat-file)
+
+Additional implementation include users management, register/sign-in to add to cart but allowing users to view products without register/sign-in .
+
+
 
 #App Credentials#
 	* Customer Role : customer / customer

@@ -19,7 +19,9 @@
   </tr>
   <tr ng-repeat="product in products">
     <td><div> {{product.product_name}}</div>
-    	<div><img width="100px" height="100px" ng-src="index.php?ajax=1&controller=Image&action=ImgPath&id={{product.image_id}}" src="" /></div>
+    	<div>
+    		<img width="100px" height="100px" ng-src="index.php?ajax=1&controller=Image&action=ImgPath&id={{product.image_id}}" src="" />
+    		</div>
     	</td>
     <td>
       <a class="btn btn-primary" ui-sref="viewProduct({id:product.id})">View</a>
