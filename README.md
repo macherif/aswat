@@ -9,7 +9,7 @@
     The backend should be able to add/edit/delete products and product categories
     Frontend should be able to list the product and product categories and add items to the cart and save it for later checkout (using JS local storage)
     Database can be of your choice (mysql/mongodb/flat-file)
-
+[![PREVIEW ](https://github.com/macherif/aswat/master/assets/upload/Browsing product by category.png)]
 Additional implementation include users management, register/sign-in to add to cart but allowing users to view products without register/sign-in .
 
 
